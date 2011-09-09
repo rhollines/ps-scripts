@@ -1,0 +1,11 @@
+Installation instructions:
+
+perl Build.PL
+perl Build install
+
+
+Test instructions:
+
+Edit t/TestConfig.pm and set your CIM options
+perl Build test
+

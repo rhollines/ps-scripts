@@ -1,0 +1,15 @@
+Revision history for Perl module Coverity::WS
+
+0.01 Thu Feb 25 14:51:56 2010
+    - original version; created by ExtUtils::ModuleMaker 0.51
+
+0.2  Sun Apr 04 20:31:01 2010
+    - initial release
+
+0.2.1  Wed Apr 07 10:13:01 2010
+    - Fixed bug in SOAP Proxy address generation
+    - Added support for HTTP proxies
+
+0.2.2  Thu Apr 08 15:24:01 2010
+    - Added create-project.pl example
+    - Discourage use of accessors
