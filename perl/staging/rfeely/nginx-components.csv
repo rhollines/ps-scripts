@@ -1,0 +1,5 @@
+#Component,Path,Owner
+core,.*/core/.*,
+event,.*/event/.*,
+http,.*/http/.*,
+os,.*/os/.*,
