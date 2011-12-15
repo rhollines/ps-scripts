@@ -22,6 +22,10 @@ public class ConfigurationManager {
 	private String password;
 	private List<ScmStreamData> scmStreamData = new ArrayList<ScmStreamData>();
 	private String scmClass;
+	private String bugTrackingClass;
+	private String bugTrackingAddress;
+	private String bugTrackingUser;
+	private String bugTrackingPassword;
 	
 	private ConfigurationManager() {
 		try {
@@ -119,8 +123,58 @@ public class ConfigurationManager {
 				this.scmStreamData.add(new ScmStreamData(name, cimStripPath, localPrependPath));
 			}
 		}
+		
+		// get bug tracking tag
+		NodeList bugTrackingNode = document.getDocumentElement().getElementsByTagName("bug-tracking");
+		if (bugTrackingNode.getLength() == 1) {
+			Element bugTrackingElem = (Element) bugTrackingNode.item(0);
+			
+			NodeList systemNode = bugTrackingElem.getElementsByTagName("system");
+			if (systemNode.getLength() != 1) {
+				System.err.println("Invalid or missing system configuration tag!");
+			}
+			Element systemElem = (Element) systemNode.item(0);
+			this.bugTrackingClass = systemElem.getAttribute("class");
+			
+			NodeList bugTrackingAddressNode = systemElem.getElementsByTagName("address");
+			if (bugTrackingAddressNode.getLength() != 1) {
+				System.err.println("Invalid or missing Address configuration tag!");
+			}
+			Element bugTrackingAddressElem = (Element) bugTrackingAddressNode.item(0);
+			this.bugTrackingAddress = bugTrackingAddressElem.getTextContent();
+			
+			NodeList bugTrackingUserNode = systemElem.getElementsByTagName("user");
+			if (bugTrackingUserNode.getLength() != 1) {
+				System.err.println("Invalid or missing user configuration tag!");
+			}
+			Element bugTrackingUserElem = (Element) bugTrackingUserNode.item(0);
+			this.bugTrackingUser = bugTrackingUserElem.getTextContent();
+			
+			NodeList bugTrackingPasswordNode = systemElem.getElementsByTagName("password");
+			if (bugTrackingPasswordNode.getLength() != 1) {
+				System.err.println("Invalid or missing password configuration tag!");
+			}
+			Element bugTrackingPasswordElem = (Element) bugTrackingPasswordNode.item(0);
+			this.bugTrackingPassword = bugTrackingPasswordElem.getTextContent();
+		}
 	}
 	
+	public String getBugTrackingClass() {
+		return bugTrackingClass;
+	}
+
+	public String getBugTrackingAddress() {
+		return bugTrackingAddress;
+	}
+
+	public String getBugTrackingUser() {
+		return bugTrackingUser;
+	}
+
+	public String getBugTrackingPassword() {
+		return bugTrackingPassword;
+	}
+
 	public String getScmClass() {
 		return scmClass;
 	}

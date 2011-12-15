@@ -32,6 +32,10 @@
 	</scm>
 	
 	<bug-tracking>
-		<system class="com.coverity.ps.bugtracking.Bugzilla"/>
+		<system class="com.coverity.ps.bugtracking.Bugzilla">
+			<address>http://bugz-test.dev.equallogic.com/bugz/xmlrpc.cgi</address>
+			<user>cov_test@dell.com</user>
+			<password>covcim</password>
+		</system>
 	</bug-tracking>
 </coverity-bn-config>
