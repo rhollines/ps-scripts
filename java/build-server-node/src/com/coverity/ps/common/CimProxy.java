@@ -48,6 +48,7 @@ public class CimProxy {
 	private int port;
 	private ConfigurationService configurationService;
 	private DefectService defectService;
+	
 
 	// TODO: get from configuration file
 	private CimProxy() {
