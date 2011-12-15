@@ -21,8 +21,7 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 	}
 
 	public boolean execute() throws Exception {
-		ConfigurationManager configurationManager = ConfigurationManager
-				.getInstance();
+		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 		Map<String, List<MergedDefectDataObj>> defectsByUser = getStreamDefectsByOwner();
 		System.out.println(defectsByUser.size() + " users with new defects");
 		

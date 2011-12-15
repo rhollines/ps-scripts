@@ -205,6 +205,19 @@ public class CimProxy {
 
 		return results;
 	}
+	
+	public MergedDefectDataObj getMergedDefectForProject(String project, Long cid) throws CovRemoteServiceException_Exception {
+		MergedDefectFilterSpecDataObj filterSpec = new MergedDefectFilterSpecDataObj();
+		filterSpec.setMinCid(new Long(cid));
+		filterSpec.setMaxCid(new Long(cid));
+		
+		List<MergedDefectDataObj> defects = this.getMergedDefectsForProject(project, filterSpec);
+		if(defects.size() == 1) {
+			return defects.get(0);
+		}
+		
+		return null;
+	}
 
 	public List<UserDataObj> getAllUsers()
 			throws CovRemoteServiceException_Exception {

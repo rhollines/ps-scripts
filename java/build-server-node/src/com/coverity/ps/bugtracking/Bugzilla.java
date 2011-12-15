@@ -22,6 +22,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.coverity.cim.ws.MergedDefectDataObj;
+import com.coverity.cim.ws.MergedDefectFilterSpecDataObj;
+import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 
 public class Bugzilla {
@@ -131,20 +134,24 @@ public class Bugzilla {
 		Map loginResult = (Map) rpcClient.execute("User.login",	new Object[] { loginMap });
 		System.err.println("loginResult=" + loginResult);
 		
-		// TODO: get project information
-		
-		
-		// map of the bug data
-		Map<String, String> bugMap = new HashMap<String, String>();
-		bugMap.put("version", "unspecified");
-		bugMap.put("product", "3rd Party Products");
-		bugMap.put("component", "VMWare");
-		bugMap.put("summary", "Testing 42.");
-		bugMap.put("description", "Testing 42.");
-		
-		// create bug
-		Map createResult = (Map) rpcClient.execute("Bug.create", new Object[] { bugMap });
-		System.err.println("createResult = " + createResult);
+		// TODO: get project information - don't hardcode 
+		CimProxy cimProxy = CimProxy.getInstance();
+		MergedDefectDataObj defect = cimProxy.getMergedDefectForProject("Glenlivet", 25387L);
+		if(defect != null) {
+			// map of the bug data
+			Map<String, String> bugMap = new HashMap<String, String>();
+			bugMap.put("version", "unspecified");
+			bugMap.put("product", "3rd Party Products");
+			bugMap.put("component", "VMWare");
+			bugMap.put("summary", "Coverity Defect" + defect.getCid());
+			bugMap.put("description", defect.getFirstDetectedDescription());
+			
+			// create bug
+			Map createResult = (Map) rpcClient.execute("Bug.create", new Object[] { bugMap });
+			System.err.println("createResult = " + createResult);
+			
+			// TOOD: get bug id and update defect
+		}
 	}
 
 	public static void main(String[] args) {
