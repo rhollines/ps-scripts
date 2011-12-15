@@ -66,16 +66,14 @@ public class Bugzilla {
 
 	public void createBug(String inputFile) throws Exception {
 		// load config service and parse input xml
-		ConfigurationManager configurationManager = ConfigurationManager
-				.getInstance();
+		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 		parseInputFile(inputFile);
-
+		
+		// create a client with cookie support
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-		config.setServerURL(new URL(configurationManager
-				.getBugTrackingAddress()));
+		config.setServerURL(new URL(configurationManager.getBugTrackingAddress()));
 		rpcClient = new XmlRpcClient();
-		rpcClient.setTransportFactory(new XmlRpcSunHttpTransportFactory(
-				rpcClient) {
+		rpcClient.setTransportFactory(new XmlRpcSunHttpTransportFactory(rpcClient) {
 			public XmlRpcTransport getTransport() {
 				return new XmlRpcSunHttpTransport(rpcClient) {
 					private URLConnection conn;
@@ -130,12 +128,12 @@ public class Bugzilla {
 		loginMap.put("rememberlogin", "Bugzilla_remember");
 
 		// login to bugzilla
-		Map loginResult = (Map) rpcClient.execute("User.login",
-				new Object[] { loginMap });
+		Map loginResult = (Map) rpcClient.execute("User.login",	new Object[] { loginMap });
 		System.err.println("loginResult=" + loginResult);
-
+		
 		// TODO: get project information
-
+		
+		
 		// map of the bug data
 		Map<String, String> bugMap = new HashMap<String, String>();
 		bugMap.put("version", "unspecified");
@@ -143,10 +141,9 @@ public class Bugzilla {
 		bugMap.put("component", "VMWare");
 		bugMap.put("summary", "Testing 42.");
 		bugMap.put("description", "Testing 42.");
-
+		
 		// create bug
-		Map createResult = (Map) rpcClient.execute("Bug.create",
-				new Object[] { bugMap });
+		Map createResult = (Map) rpcClient.execute("Bug.create", new Object[] { bugMap });
 		System.err.println("createResult = " + createResult);
 	}
 
