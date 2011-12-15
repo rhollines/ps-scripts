@@ -1,6 +1,0 @@
-#Component,Path,Owner
-cgi,.*/cgi/.*,rfeely
-xdata,.*/xdata/.*,rfeely
-base,.*/base/.*,rfeely
-common,.*/common/.*,rfeely
-module,.*/module/.*,ronan

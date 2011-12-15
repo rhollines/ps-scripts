@@ -1,7 +1,0 @@
-#Component,Path,Owner
-security,.*/7-security/.*,
-inspecting,.*/6-inspecting/.*,
-modelling,.*/5-modelling/.*,
-interproc,.*/3-interproc/.*,
-local,.*/2-local/.*,
-paths,.*/1-paths/.*,

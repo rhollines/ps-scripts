@@ -1,8 +1,6 @@
--- test
-This repository hosts the PS integration scripts.
-This is a test addition by Satish.
-  Sneaky addition inserted by test user coverity-pse!!!
-  Another addition inserted by test user coverity-pse!!!
-Another test from the web-browser
-And another test from the web :)
+Initial source code for Java base target architecture
 
+TODO:
+* integrate edowning's Bugzilla code 
+* integrate mwhite's servlet code
+* integrate rhollines's 3rd party integration code
