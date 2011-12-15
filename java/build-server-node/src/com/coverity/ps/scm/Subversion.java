@@ -11,7 +11,7 @@ import org.w3c.dom.NodeList;
 
 public class Subversion implements ScmPlugin {
 	@Override
-	public String getFileOwner(String filename) throws Exception {
+	public String getFileOwner(String filename) {
 		final String command = "svn ls --xml " + filename;
 		try {
 			Process process = Runtime.getRuntime().exec(command);
@@ -27,11 +27,9 @@ public class Subversion implements ScmPlugin {
 			}
 			Element authorElem = (Element) authorNode.item(0);
 			return authorElem.getTextContent();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			return "";
 		}
-		
-		return "";
 	}
 
 	public static void main(String[] args) {

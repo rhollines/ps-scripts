@@ -1,33 +1,34 @@
 <coverity-bn-config>
 	<cim>
-		<!-- 
 		<address>deweb.dev.equallogic.com</address>
 		<port>28080</port>
 		<user>admin</user>
 		<password>eqlcovcim</password>
-		-->
 		
+<!-- 
 		<address>localhost</address>
 		<port>8080</port>
 		<user>admin</user>
 		<password>hellofoo</password>
+ -->
 	</cim>
+	
 	<scm>
-<!--
 		<system class="com.coverity.ps.scm.Subversion">
 			<stream name="Glenlivet_C"> 
 				<cim-strip-path>/buildarea/cov-glen</cim-strip-path>
 				<local-prepend-path>svn://svn.dev.equallogic.com/equallogic/branches/Glenlivet</local-prepend-path>
 			</stream>
 		</system>
--->	
-
+		
+<!--
  		<system class="com.coverity.ps.scm.Subversion">
 			<stream name="compiler_posix"> 
 				<cim-strip-path></cim-strip-path>
 				<local-prepend-path>C:/Users/rhollines/Documents/Demo/src</local-prepend-path>
 			</stream>
 		</system>
+-->	
 	
 	</scm>
 </coverity-bn-config>

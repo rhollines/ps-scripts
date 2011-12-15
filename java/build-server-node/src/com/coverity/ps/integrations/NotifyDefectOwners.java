@@ -66,8 +66,8 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 				else {
 					final String subject = "New defects assigned to you in Coverity";
 					String recipient = CimProxy.getInstance().notify(userDefectValues.getKey(), subject, html.toString());
-					if(recipient.length() == 0) {
-						return false;
+					if(recipient.length() > 0) {
+						System.out.println("e-mail sucessfully sent to " + recipient);
 					}
 				}
 			}

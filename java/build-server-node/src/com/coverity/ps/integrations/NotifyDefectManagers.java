@@ -39,7 +39,7 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 		for (Map.Entry<String, List<MergedDefectDataObj>> userDefectValues : defectsByUser.entrySet()) {
 			List<MergedDefectDataObj> userDefects = userDefectValues.getValue();
 			if (userDefects.size() > 0) {
-				html.append("<p><b>Defect for ");
+				html.append("<p><b>Defect(s) for ");
 				html.append(userDefectValues.getKey());
 				html.append("</b>");
 				html.append("<table border=\"1\"><tr><th>CID</th><th>Checker</th><th>File</th></tr>");
@@ -74,8 +74,8 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 		else {
 			final String subject = "New Coverity defects";
 			List<String> recipients = CimProxy.getInstance().notify(this.users, subject, html.toString());
-			if(recipients.size() == 0) {
-				return false;
+			for(String recipient : recipients) {
+				System.out.println("e-mail sucessfully sent to " + recipient);
 			}
 		}
 		
@@ -98,7 +98,7 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 			} else {
 				System.err.println("usage: java "
 						+ UserDefectReport.class.getName()
-						+ " <dry-run(true|false)>");
+						+ " <project-name> <num-days> <users-to-email> <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

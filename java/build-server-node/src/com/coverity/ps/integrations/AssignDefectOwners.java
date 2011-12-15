@@ -63,7 +63,7 @@ public class AssignDefectOwners implements Integration {
 			}
 			ScmPlugin scm = (ScmPlugin)scmClass.newInstance();
 			for(MergedDefectDataObj defect : defects) {
-				if(defect.getStatus().equals("New")) {
+				if(defect.getStatus().equals("New") && defect.getOwner().equals("Unassigned")) {
 					final String coverityPath = defect.getFilePathname();
 					final String stripPath = scmStreamData.getCimStripPath();
 					final String prependPath = scmStreamData.getLocalPrependPath();
