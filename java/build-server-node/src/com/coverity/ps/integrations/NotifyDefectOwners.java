@@ -90,7 +90,7 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 			} else {
 				System.err.println("usage: java "
 						+ UserDefectReport.class.getName()
-						+ " <dry-run(true|false)>");
+						+ " <project-name> <num-days> <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

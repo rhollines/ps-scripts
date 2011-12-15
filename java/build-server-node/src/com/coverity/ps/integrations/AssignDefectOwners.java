@@ -115,7 +115,7 @@ public class AssignDefectOwners implements Integration {
 				}
 			}
 			else {
-				System.err.println("usage: java " + AssignDefectOwners.class.getName() + " <dry-run(true|false)>");
+				System.err.println("usage: java " + AssignDefectOwners.class.getName() + " <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
