@@ -29,6 +29,9 @@
 			</stream>
 		</system>
 -->	
-	
 	</scm>
+	
+	<bug-tracking>
+		<system class="com.coverity.ps.bugtracking.Bugzilla"/>
+	</bug-tracking>
 </coverity-bn-config>

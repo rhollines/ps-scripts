@@ -37,6 +37,7 @@ import com.coverity.cim.ws.StreamFilterSpecDataObj;
 import com.coverity.cim.ws.StreamIdDataObj;
 import com.coverity.cim.ws.UserDataObj;
 import com.coverity.cim.ws.UserFilterSpecDataObj;
+import com.coverity.cim.ws.UserSpecDataObj;
 import com.coverity.cim.ws.UsersPageDataObj;
 import com.coverity.ps.common.config.ConfigurationManager;
 
@@ -317,6 +318,14 @@ public class CimProxy {
 		}
 		
 		return "";
+	}
+	
+	public void createUser(UserSpecDataObj specData) throws CovRemoteServiceException_Exception {
+		this.configurationService.createUser(specData);
+	}
+	
+	public void createProject(ProjectSpecDataObj specData) throws CovRemoteServiceException_Exception {
+		this.configurationService.createProject(specData);
 	}
 	
 	public static void main(String[] args) {
