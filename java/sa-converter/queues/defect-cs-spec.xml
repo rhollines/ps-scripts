@@ -1,0 +1,14 @@
+<defect-spec>
+	<!-- optional, required if function is not provided -->
+	<parser language='java' class='com.coverity.sac.parser.java.JavaParser'/>
+	<file-tag path='//checkstyle/file' attrib='name'>
+		<defect-tag path='error'>
+			<checker-tag path='.' attrib='source'/>
+			<event-tag path='.' attrib='error'/>
+			<line-tag path='.' attrib='line'/>
+			<!-- optional, required if parser is not provided -->
+			<!-- <function-tag path='.' attrib='xxx'/> -->
+			<description-tag path='.' attrib='message'/>
+		</defect-tag>
+	</file-tag>
+</defect-spec>

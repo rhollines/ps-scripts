@@ -1,0 +1,14 @@
+<defect-spec>
+	<!-- optional, required if function is not provided -->
+	<parser language='actionscript' class='com.coverity.sac.parser.as.ActionScriptParser'/>
+	<file-tag path='//pmd/file' attrib='name'>
+		<defect-tag path='violation'>
+			<checker-tag path='.' attrib='rule'/>
+			<event-tag path='.' attrib='ruleset'/>
+			<line-tag path='.' attrib='beginline'/>
+			<!-- optional, required if parser is not provided -->
+			<!-- <function-tag path='.' attrib='xxx'/> -->
+			<description-tag path='.' attrib='#'/>
+		</defect-tag>
+	</file-tag>
+</defect-spec>
