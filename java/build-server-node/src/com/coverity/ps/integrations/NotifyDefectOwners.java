@@ -6,6 +6,7 @@ import java.util.Map;
 import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
+import com.coverity.ps.integrations.common.UserDefectReport;
 
 public class NotifyDefectOwners extends UserDefectReport implements Integration {
 	public NotifyDefectOwners(String project, int days, boolean isDryRun) {
@@ -16,6 +17,7 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 		ConfigurationManager configurationManager = ConfigurationManager
 				.getInstance();
 		Map<String, List<MergedDefectDataObj>> defectsByUser = getStreamDefectsByOwner();
+		System.out.println(defectsByUser.size() + " users with new defects");
 		for (Map.Entry<String, List<MergedDefectDataObj>> userDefectValues : defectsByUser.entrySet()) {
 			List<MergedDefectDataObj> userDefects = userDefectValues.getValue();
 			if (userDefects.size() > 0) {
@@ -60,19 +62,18 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 				
 				if(this.isDryRun) {
 					System.out.println(html);
-					return true;
 				}
 				else {
 					final String subject = "New defects assigned to you in Coverity";
 					String recipient = CimProxy.getInstance().notify(userDefectValues.getKey(), subject, html.toString());
-					if(recipient.length() > 0) {
-						return true;
+					if(recipient.length() == 0) {
+						return false;
 					}
 				}
 			}
 		}
 		
-		return false;
+		return true;
 	}
 
 	public static void main(String[] args) {
