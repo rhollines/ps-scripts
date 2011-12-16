@@ -198,8 +198,4 @@ public class ConfigurationManager {
 	public String getPassword() {
 		return password;
 	}
-	
-	public static void main(String[] args) {
-		ConfigurationManager cm =  ConfigurationManager.getInstance();
-	}
 }
