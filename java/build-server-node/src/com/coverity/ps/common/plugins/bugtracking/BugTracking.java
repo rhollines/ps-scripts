@@ -1,4 +1,4 @@
-package com.coverity.ps.bugtracking.plugins;
+package com.coverity.ps.common.plugins.bugtracking;
 
 import com.coverity.cim.ws.MergedDefectDataObj;
 

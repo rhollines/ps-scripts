@@ -1,4 +1,4 @@
-package com.coverity.ps.scm.plugins;
+package com.coverity.ps.common.plugins.scm;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

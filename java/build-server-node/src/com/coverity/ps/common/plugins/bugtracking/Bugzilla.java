@@ -1,4 +1,4 @@
-package com.coverity.ps.bugtracking.plugins;
+package com.coverity.ps.common.plugins.bugtracking;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package com.coverity.ps.integrations.common;
+package com.coverity.ps.integrations.shared;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

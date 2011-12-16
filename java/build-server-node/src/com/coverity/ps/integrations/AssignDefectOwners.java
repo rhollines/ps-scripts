@@ -13,7 +13,7 @@ import com.coverity.cim.ws.UserDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.common.config.ScmStreamData;
-import com.coverity.ps.scm.plugins.ScmPlugin;
+import com.coverity.ps.common.plugins.scm.ScmPlugin;
 
 public class AssignDefectOwners implements Integration {
 	private boolean isDryRun;

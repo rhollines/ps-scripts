@@ -1,4 +1,4 @@
-package com.coverity.ps.bugtracking;
+package com.coverity.ps.integrations.bugtracking;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -9,11 +9,11 @@ import org.w3c.dom.NodeList;
 
 import com.coverity.cim.ws.DefectStateSpecDataObj;
 import com.coverity.cim.ws.MergedDefectDataObj;
-import com.coverity.ps.bugtracking.plugins.BugTracking;
-import com.coverity.ps.bugtracking.plugins.Bugzilla;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
-import com.coverity.ps.scm.plugins.ScmPlugin;
+import com.coverity.ps.common.plugins.bugtracking.BugTracking;
+import com.coverity.ps.common.plugins.bugtracking.Bugzilla;
+import com.coverity.ps.common.plugins.scm.ScmPlugin;
 
 public class ExportDefect {
 	private String inputFile;
