@@ -12,8 +12,6 @@ import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.common.plugins.bugtracking.BugTracking;
-import com.coverity.ps.common.plugins.bugtracking.Bugzilla;
-import com.coverity.ps.common.plugins.scm.ScmPlugin;
 
 public class ExportDefect {
 	private String inputFile;
