@@ -1,4 +1,4 @@
-package com.coverity.ps.integrations;
+package com.coverity.ps.integrations.reporting;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
-import com.coverity.ps.integrations.shared.UserDefectReport;
+import com.coverity.ps.integrations.Integration;
 
 public class NotifyDefectOwners extends UserDefectReport implements Integration {
 	public NotifyDefectOwners(String project, int days, boolean isDryRun) {

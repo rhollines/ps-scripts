@@ -1,4 +1,4 @@
-package com.coverity.ps.integrations;
+package com.coverity.ps.integrations.reporting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Map;
 import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
-import com.coverity.ps.integrations.shared.UserDefectReport;
+import com.coverity.ps.integrations.Integration;
 
 public class NotifyDefectManagers extends UserDefectReport implements Integration {
 	private List<String> users = new ArrayList<String>();
