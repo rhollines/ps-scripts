@@ -1,6 +1,8 @@
 Initial source code for Java base target architecture
 
 TODO:
-* integrate edowning's Bugzilla code 
-* integrate mwhite's servlet code
-* integrate rhollines's 3rd party integration code
+* integrate mwhite's servlet code for the management console
+* add support for unix style command line options
+* write additional plug-ins
+- clean before check-in
+- others
