@@ -88,9 +88,8 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 					System.out.println("\n*** Unsuccessful ***");
 				}
 			} else {
-				System.err.println("usage: java "
-						+ UserDefectReport.class.getName()
-						+ " <project-name> <num-days> <is-dry-run>");
+				System.err.println("This program notifies defect owners of new defects that have been detected in the last N number of days.");
+				System.err.println("usage: java " + UserDefectReport.class.getName() + " <project-name> <num-days> <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

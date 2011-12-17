@@ -16,6 +16,7 @@ import org.apache.xmlrpc.client.XmlRpcSunHttpTransport;
 import org.apache.xmlrpc.client.XmlRpcSunHttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransport;
 
+import com.coverity.cim.ws.DefectStateCustomAttributeValueDataObj;
 import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.config.ConfigurationManager;
 
@@ -94,12 +95,30 @@ public class Bugzilla implements BugTracking {
 		System.err.println("loginResult=" + loginResult);
 		
 		// map of the bug data
+		String summary = "Coverity defect " + defect.getCheckerName() + ":" + defect.getCid();
+		String description = defect.getComment();
+		if(description == null || description.length() == 0) {
+			description = "No description provided by Coverity";
+		}
+		
+		String product = null;
+		String component = null;		
+		List<DefectStateCustomAttributeValueDataObj> attribs = defect.getDefectStateCustomAttributeValues();
+		for(DefectStateCustomAttributeValueDataObj  attrib : attribs) {
+			if(attrib.getAttributeDefinitionId().getName().equals("Component")) {
+				component = attrib.getAttributeValueId().getName();
+			}
+			else if(attrib.getAttributeDefinitionId().getName().equals("Product")) {
+				product = attrib.getAttributeValueId().getName();
+			}
+		}
+		
 		Map<String, String> bugMap = new HashMap<String, String>();
-		bugMap.put("version", "unspecified");
-		bugMap.put("product", "3rd Party Products");
-		bugMap.put("component", "VMWare");
-		bugMap.put("summary", "Coverity Defect" + defect.getCid());
-		bugMap.put("description", defect.getFirstDetectedDescription());
+		bugMap.put("version", "V6.0.0 Glenlivet");
+		bugMap.put("product", product);
+		bugMap.put("component", component);
+		bugMap.put("summary", summary);
+		bugMap.put("description", description);
 		
 		// create bug and return id
 		Map createResult = (Map) rpcClient.execute("Bug.create", new Object[] { bugMap });

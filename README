@@ -1,8 +1,1 @@
-Initial source code for Java base target architecture
-
-TODO:
-* integrate mwhite's servlet code for the management console
-* add support for unix style command line options
-* write additional plug-ins
-- clean before check-in
-- others
+This program notifies defect owners of new defects that have been detected in the last N number of days.

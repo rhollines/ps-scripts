@@ -82,11 +82,14 @@ public class ExportDefect {
 	public static void main(String[] args) {
 		try {
 			if(args.length == 2) {
+				// have the script delete the file
 				ExportDefect exportDefect = new ExportDefect(args[0], args[1].equalsIgnoreCase("true"));
 				exportDefect.createBug();
+				System.exit(0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 }

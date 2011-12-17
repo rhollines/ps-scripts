@@ -1,18 +1,20 @@
 <coverity-bn-config>
 	<cim>
-<!-- 	
-		<address>deweb.dev.equallogic.com</address>
+		<address>deweb.mht.amer.dell.com</address>
 		<port>28080</port>
 		<user>admin</user>
 		<password>eqlcovcim</password>
- -->
-		
+	</cim>
+
+<!-- 
+	<cim>
 		<address>localhost</address>
 		<port>8080</port>
 		<user>admin</user>
 		<password>hellofoo</password>
 	</cim>
-	
+ -->
+ 
 	<scm>
 		<system class="com.coverity.ps.scm.Subversion">
 			<stream name="Glenlivet_C"> 
@@ -32,7 +34,7 @@
 	</scm>
 	
 	<bug-tracking>
-		<system class="com.coverity.ps.bugtracking.plugins.Bugzilla">
+		<system class="com.coverity.ps.common.plugins.bugtracking.Bugzilla">
 			<address>http://bugz-test.dev.equallogic.com/bugz/xmlrpc.cgi</address>
 			<user>cov_test@dell.com</user>
 			<password>covcim</password>

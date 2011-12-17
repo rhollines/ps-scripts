@@ -95,9 +95,8 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 					System.out.println("\n*** Unsuccessful ***");
 				}
 			} else {
-				System.err.println("usage: java "
-						+ UserDefectReport.class.getName()
-						+ " <project-name> <num-days> <users-to-email> <is-dry-run>");
+				System.err.println("This program e-mails a list of users new defects that have been detected in the last N number of days.");
+				System.err.println("usage: java " + UserDefectReport.class.getName() + " <project-name> <num-days> <users-to-email> <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
