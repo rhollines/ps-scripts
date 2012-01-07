@@ -17,10 +17,10 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 		ConfigurationManager configurationManager = ConfigurationManager
 				.getInstance();
 		Map<String, List<MergedDefectDataObj>> defectsByUser = getStreamDefectsByOwner();
-		System.out.println(defectsByUser.size() + " users with new defects");
+		System.out.println(defectsByUser.size() + " user(s) with new defects");
 		for (Map.Entry<String, List<MergedDefectDataObj>> userDefectValues : defectsByUser.entrySet()) {
 			List<MergedDefectDataObj> userDefects = userDefectValues.getValue();
-			if (userDefects.size() > 0) {
+			if (userDefects.size() > 0 && userDefectValues.getKey() != UNASSIGNED_OWNER_NAME) {
 				StringBuilder html = new StringBuilder();
 				html.append("<html><body><p>The following ");
 				if (userDefects.size() == 1) {

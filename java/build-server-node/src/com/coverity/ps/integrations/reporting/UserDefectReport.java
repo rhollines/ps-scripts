@@ -19,6 +19,7 @@ import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.integrations.Integration;
 
 public abstract class UserDefectReport implements Integration {
+	final static String UNASSIGNED_OWNER_NAME = "Unassigned";
 	protected boolean isDryRun;
 	protected String projectName;
 	protected int days;
@@ -63,6 +64,15 @@ public abstract class UserDefectReport implements Integration {
 					if(userDefects == null) {
 						userDefects = new ArrayList<MergedDefectDataObj>();
 						defectsByUser.put(defect.getOwner(), userDefects);
+					}
+					// System.out.println("cid=" + defect.getCid() + ", owner=" + defect.getOwner());
+					userDefects.add(defect);
+				}
+				else {
+					List<MergedDefectDataObj> userDefects = (List<MergedDefectDataObj>)defectsByUser.get(UNASSIGNED_OWNER_NAME);
+					if(userDefects == null) {
+						userDefects = new ArrayList<MergedDefectDataObj>();
+						defectsByUser.put(UNASSIGNED_OWNER_NAME, userDefects);
 					}
 					// System.out.println("cid=" + defect.getCid() + ", owner=" + defect.getOwner());
 					userDefects.add(defect);

@@ -50,7 +50,6 @@ public class CimProxy {
 	private ConfigurationService configurationService;
 	private DefectService defectService;
 
-	// TODO: get from configuration file
 	private CimProxy() {
 		this.user = ConfigurationManager.getInstance().getUser();
 		this.password = ConfigurationManager.getInstance().getPassword();
