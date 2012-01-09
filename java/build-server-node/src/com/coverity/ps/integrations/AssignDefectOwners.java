@@ -15,9 +15,18 @@ import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.common.config.ScmConfigData;
 import com.coverity.ps.common.plugins.scm.ScmPlugin;
 
+/**
+ * Automatic assignment of defects based upon the last person who modified a given file. 
+ * This integration uses an SCM plug-in.
+ */ 
 public class AssignDefectOwners implements Integration {
 	private boolean isDryRun;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param isDryRun
+	 */ 
 	public AssignDefectOwners(boolean isDryRun) {
 		this.isDryRun = isDryRun;
 	}

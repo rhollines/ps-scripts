@@ -9,9 +9,21 @@ import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.integrations.Integration;
 
+/*
+ * Creates an e-mail report of defects that have been detected in the 
+ * last N number of days.  Sends an e-mail to a list of specified recipients.
+ */
 public class NotifyDefectManagers extends UserDefectReport implements Integration {
 	private List<String> users = new ArrayList<String>();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param project project name
+	 * @param days defects detected in the past N number of days
+	 * @param managerList e-mail recipients
+	 * @param isDryRun
+	 */
 	public NotifyDefectManagers(String project, int days, String managerList, boolean isDryRun) {
 		super(project, days, isDryRun);
 		String[] managers = managerList.split(",");

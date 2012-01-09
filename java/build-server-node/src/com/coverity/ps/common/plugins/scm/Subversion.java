@@ -11,7 +11,9 @@ import org.w3c.dom.NodeList;
  * Provides support for subversion
  */
 public class Subversion implements ScmPlugin {
-	@Override
+	/**
+	 * Returns the username of the last person modified the file
+	 */
 	public String getFileOwner(String filename) {
 		final String command = "svn ls --xml " + filename;
 		try {

@@ -8,6 +8,9 @@ import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.integrations.Integration;
 
+/*
+ * Base class for defect reporting
+ */
 public class NotifyDefectOwners extends UserDefectReport implements Integration {
 	public NotifyDefectOwners(String project, int days, boolean isDryRun) {
 		super(project, days, isDryRun);

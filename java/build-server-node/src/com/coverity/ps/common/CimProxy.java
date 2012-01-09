@@ -41,6 +41,9 @@ import com.coverity.cim.ws.UserSpecDataObj;
 import com.coverity.cim.ws.UsersPageDataObj;
 import com.coverity.ps.common.config.ConfigurationManager;
 
+/**
+ * Java wrapper around the CIM SOAP APIs
+ */
 public class CimProxy {
 	private static CimProxy instance;
 	private String user;
