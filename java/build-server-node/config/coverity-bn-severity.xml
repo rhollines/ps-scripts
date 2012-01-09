@@ -1,0 +1,9 @@
+<coverity-bn-severity>
+	<severities lang="cxx">
+		<checker name="FORWARD_NULL" severity="Moderate"/>
+		<checker name="RESOURCE_LEAK" severity="Major"/>
+		<checker name="STRING_OVERFLOW" severity="Major"/>
+		<checker name="UNINIT_CTOR" severity="Minor"/>	
+		<checker name="CTOR_DTOR_LEAK" severity="Minor"/>
+	</severities>
+</coverity-bn-severity>

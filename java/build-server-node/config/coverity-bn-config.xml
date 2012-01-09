@@ -1,43 +1,35 @@
 <coverity-bn-config>
+<!--
 	<cim>
-		<address>deweb.mht.amer.dell.com</address>
-		<port>28080</port>
+		<address>10.100.0.8</address>
+		<port>8080</port>
 		<user>admin</user>
-		<password>eqlcovcim</password>
+		<password>cisco123</password>
 	</cim>
-
-<!-- 
+ -->
+	
 	<cim>
 		<address>localhost</address>
 		<port>8080</port>
 		<user>admin</user>
-		<password>hellofoo</password>
+		<password>helloworld</password>
 	</cim>
- -->
  
 	<scm>
-		<system class="com.coverity.ps.scm.Subversion">
-			<stream name="Glenlivet_C"> 
-				<cim-strip-path>/buildarea/cov-glen</cim-strip-path>
-				<local-prepend-path>svn://svn.dev.equallogic.com/equallogic/branches/Glenlivet</local-prepend-path>
-			</stream>
-		</system>
-		
-<!--
  		<system class="com.coverity.ps.scm.Subversion">
 			<stream name="compiler_posix"> 
 				<cim-strip-path></cim-strip-path>
 				<local-prepend-path>C:/Users/rhollines/Documents/Demo/src</local-prepend-path>
 			</stream>
 		</system>
--->	
 	</scm>
-	
+<!--
 	<bug-tracking>
 		<system class="com.coverity.ps.common.plugins.bugtracking.Bugzilla">
-			<address>http://bugz-test.dev.equallogic.com/bugz/xmlrpc.cgi</address>
-			<user>cov_test@dell.com</user>
+			<address>http://bugz-test.dev.xxx.com/bugz/xmlrpc.cgi</address>
+			<user>cov_test@xxx.com</user>
 			<password>covcim</password>
 		</system>
 	</bug-tracking>
+-->	
 </coverity-bn-config>
