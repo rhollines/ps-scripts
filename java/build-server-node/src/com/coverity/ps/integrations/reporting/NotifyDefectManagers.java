@@ -37,7 +37,7 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 		
 		for (Map.Entry<String, List<MergedDefectDataObj>> userDefectValues : defectsByUser.entrySet()) {
 			List<MergedDefectDataObj> userDefects = userDefectValues.getValue();
-			if (userDefects.size() > 0) {
+			if (userDefects.size() > 0 && userDefectValues.getKey() != UNASSIGNED_OWNER_NAME) {
 				html.append("<p><b>Defect(s) for ");
 				html.append(userDefectValues.getKey());
 				html.append("</b>");
@@ -65,6 +65,37 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 				html.append("</table></p>");
 			}
 		}
+		
+		// unassigned defects
+		if(defectsByUser.containsKey(UNASSIGNED_OWNER_NAME)) {
+			List<MergedDefectDataObj> userDefects = defectsByUser.get(UNASSIGNED_OWNER_NAME);
+			if (userDefects.size() > 0) {
+				html.append("<p><b>Unassigned Defects</b>");
+				html.append("<table border=\"1\"><tr><th>CID</th><th>Checker</th><th>File</th></tr>");
+				for (MergedDefectDataObj defect : userDefects) {
+					StringBuilder defectUrl = new StringBuilder("http://");
+					defectUrl.append(configurationManager.getAddress());
+					defectUrl.append(':');
+					defectUrl.append(configurationManager.getPort());
+					defectUrl.append("/sourcebrowser.htm?projectId=");
+					defectUrl.append(this.projectId);
+					defectUrl.append("#mergedDefectId=");
+					defectUrl.append(defect.getCid());
+					html.append("<tr><td><a href=\"");
+					html.append(defectUrl);
+					html.append("\"/a>");
+					html.append(defect.getCid());
+					html.append("</td><td>");
+					html.append(defect.getCheckerName());
+					html.append("</td><td>");
+					html.append(defect.getFilePathname());
+					html.append("</td></tr>");
+					// System.out.println("user=" + userDefectValues.getKey() + ", defect=" + defect.getCid());
+				}
+				html.append("</table></p>");
+			}
+		}
+		
 		html.append("</body></html>");
 		
 		if(this.isDryRun) {

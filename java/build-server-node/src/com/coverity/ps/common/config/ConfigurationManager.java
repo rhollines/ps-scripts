@@ -13,6 +13,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/*
+ * Manages XML configuration data 
+ */
 public class ConfigurationManager {
 	private static ConfigurationManager instance;
 	private static final String CONFIGURATION_FILE = "config/coverity-bn-config.xml";
@@ -20,7 +23,8 @@ public class ConfigurationManager {
 	private int port;
 	private String user;
 	private String password;
-	private List<ScmStreamData> scmStreamData = new ArrayList<ScmStreamData>();
+	private List<ScmConfigData> scmStreamData = new ArrayList<ScmConfigData>();
+	private List<ScmConfigData> scmProjectData = new ArrayList<ScmConfigData>();
 	private String scmClass;
 	private String bugTrackingClass;
 	private String bugTrackingAddress;
@@ -101,6 +105,7 @@ public class ConfigurationManager {
 			Element systemElem = (Element) systemNode.item(0);
 			this.scmClass = systemElem.getAttribute("class");
 			
+			// stream data
 			NodeList streamNodes = systemElem.getElementsByTagName("stream");
 			for(int i = 0; i < streamNodes.getLength(); i++) {
 				Element streamElem = (Element) streamNodes.item(i);
@@ -120,8 +125,33 @@ public class ConfigurationManager {
 				Element localPrependPathElem = (Element) localPrependPathNode.item(0);
 				String localPrependPath = localPrependPathElem.getTextContent();
 				
-				this.scmStreamData.add(new ScmStreamData(name, cimStripPath, localPrependPath));
+				this.scmStreamData.add(new ScmConfigData(name, cimStripPath, localPrependPath));
 			}
+			
+/*			
+			// project data
+			NodeList projectNodes = systemElem.getElementsByTagName("project");
+			for(int i = 0; i < projectNodes.getLength(); i++) {
+				Element projectElem = (Element) projectNodes.item(i);
+				String name = projectElem.getAttribute("name");
+				
+				NodeList cimStripPathNode = systemElem.getElementsByTagName("cim-strip-path");
+				if (cimStripPathNode.getLength() != 1) {
+					System.err.println("Invalid or missing cimStripPath configuration tag!");
+				}
+				Element cimStripPathElem = (Element) cimStripPathNode.item(0);
+				String cimStripPath = cimStripPathElem.getTextContent();
+				
+				NodeList localPrependPathNode = systemElem.getElementsByTagName("local-prepend-path");
+				if (localPrependPathNode.getLength() != 1) {
+					System.err.println("Invalid or missing localPrependPath configuration tag!");
+				}
+				Element localPrependPathElem = (Element) localPrependPathNode.item(0);
+				String localPrependPath = localPrependPathElem.getTextContent();
+				
+				this.scmProjectData.add(new ScmConfigData(name, cimStripPath, localPrependPath));
+			}
+*/			
 		}
 		
 		// get bug tracking tag
@@ -179,8 +209,12 @@ public class ConfigurationManager {
 		return scmClass;
 	}
 
-	public List<ScmStreamData> getScmStreamData() {
+	public List<ScmConfigData> getScmStreamData() {
 		return scmStreamData;
+	}
+	
+	public List<ScmConfigData> getScmProjectData() {
+		return scmProjectData;
 	}
 
 	public String getAddress() {

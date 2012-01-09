@@ -12,7 +12,7 @@ import com.coverity.cim.ws.StreamFilterSpecDataObj;
 import com.coverity.cim.ws.UserDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
-import com.coverity.ps.common.config.ScmStreamData;
+import com.coverity.ps.common.config.ScmConfigData;
 import com.coverity.ps.common.plugins.scm.ScmPlugin;
 
 public class AssignDefectOwners implements Integration {
@@ -26,8 +26,9 @@ public class AssignDefectOwners implements Integration {
 		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 		CimProxy cimProxy = CimProxy.getInstance();
 		
-		List<ScmStreamData> scmStreams = configurationManager.getScmStreamData();
-		for(ScmStreamData scmStreamData : scmStreams) {
+		// TODO: add support for project (if needed)
+		List<ScmConfigData> scmStreams = configurationManager.getScmStreamData();
+		for(ScmConfigData scmStreamData : scmStreams) {
 			// check streams
 			StreamFilterSpecDataObj streamFilter = new StreamFilterSpecDataObj();
 			streamFilter.setNamePattern(scmStreamData.getName());

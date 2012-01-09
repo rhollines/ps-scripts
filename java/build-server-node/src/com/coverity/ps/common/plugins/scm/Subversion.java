@@ -7,6 +7,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+/*
+ * Provides support for subversion
+ */
 public class Subversion implements ScmPlugin {
 	@Override
 	public String getFileOwner(String filename) {
@@ -32,9 +35,11 @@ public class Subversion implements ScmPlugin {
 
 	public static void main(String[] args) {
 		try {
-			Subversion svn = new Subversion();
-			String author = svn.getFileOwner("C:\\Users\\rhollines\\Documents\\Demo\\src\\vm\\lib_api.h");
-			System.out.println("file owner=" + author);
+			if(args.length > 0) {
+				Subversion svn = new Subversion();
+				String author = svn.getFileOwner(args[0]);
+				System.out.println("file owner=" + author);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
