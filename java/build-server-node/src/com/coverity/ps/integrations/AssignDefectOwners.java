@@ -113,6 +113,9 @@ public class AssignDefectOwners implements Integration {
 		return true;
 	}
 	
+	/*
+	 * Main command line driver. Please see class constructor for required arguments.
+	 */
 	public static void main(String[] args) {
 		try {
 			if(args.length == 1) {

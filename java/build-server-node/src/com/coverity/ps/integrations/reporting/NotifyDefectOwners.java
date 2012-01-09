@@ -8,10 +8,18 @@ import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.integrations.Integration;
 
-/*
- * Base class for defect reporting
+/**
+ * Creates an e-mail report of defects that have been detected in the 
+ * last N number of days. Sends an unique e-mail to each defect owner.
  */
 public class NotifyDefectOwners extends UserDefectReport implements Integration {
+	/**
+	 * Constructor
+	 * 
+	 * @param project project name
+	 * @param days defects detected in the past N number of days
+	 * @param isDryRun
+	 */
 	public NotifyDefectOwners(String project, int days, boolean isDryRun) {
 		super(project, days, isDryRun);
 	}
@@ -79,6 +87,9 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 		return true;
 	}
 
+	/*
+	 * Main command line driver. Please see class constructor for required arguments.
+	 */
 	public static void main(String[] args) {
 		try {
 			if (args.length == 3) {

@@ -18,9 +18,9 @@ import com.coverity.cim.ws.UserDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.integrations.Integration;
 
-/**
- * Creates an e-mail report of defects that have been detected in the 
- * last N number of days. Sends an unique e-mail to each defect owner.
+
+/*
+ * Base class for defect reporting
  */
 public abstract class UserDefectReport implements Integration {
 	final static String UNASSIGNED_OWNER_NAME = "Unassigned";
@@ -29,13 +29,6 @@ public abstract class UserDefectReport implements Integration {
 	protected int days;
 	protected long projectId;
 	
-	/**
-	 * Constructor
-	 * 
-	 * @param project project name
-	 * @param days defects detected in the past N number of days
-	 * @param isDryRun
-	 */
 	protected UserDefectReport(String project, int days, boolean isDryRun) {
 		this.projectName = project;
 		this.days = days;
