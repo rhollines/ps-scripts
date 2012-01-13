@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.coverity.cim.ws.DefectStateSpecDataObj;
-import com.coverity.cim.ws.MergedDefectDataObj;
-import com.coverity.cim.ws.StreamDataObj;
-import com.coverity.cim.ws.StreamFilterSpecDataObj;
-import com.coverity.cim.ws.UserDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.common.config.ScmConfigData;
 import com.coverity.ps.common.plugins.scm.ScmPlugin;
+import com.coverity.ws.v4.DefectStateSpecDataObj;
+import com.coverity.ws.v4.MergedDefectDataObj;
+import com.coverity.ws.v4.StreamDataObj;
+import com.coverity.ws.v4.StreamFilterSpecDataObj;
+import com.coverity.ws.v4.UserDataObj;
 
 /**
  * Automatic assignment of defects based upon the last person who modified a
@@ -61,12 +61,10 @@ public class AssignDefectOwners implements Integration {
 			// get defects
 			List<String> streams = new ArrayList<String>();
 			streams.add(scmStreamData.getName());
-			List<MergedDefectDataObj> defects = cimProxy
-					.getAllMergedDefectsForStreams(streams);
+			List<MergedDefectDataObj> defects = cimProxy.getAllMergedDefectsForStreams(streams);
 
 			// load plug-in
-			Class<ScmPlugin> scmClass = (Class<ScmPlugin>) Class
-					.forName(configurationManager.getScmClass());
+			Class<ScmPlugin> scmClass = (Class<ScmPlugin>) Class.forName(configurationManager.getScmClass());
 			if (scmClass == null) {
 				System.err.println("Unable load SCM plugin: "
 						+ configurationManager.getScmClass() + "!");
@@ -85,30 +83,25 @@ public class AssignDefectOwners implements Integration {
 						&& defect.getOwner().equals("Unassigned")) {
 					final String coverityPath = defect.getFilePathname();
 					final String stripPath = scmStreamData.getCimStripPath();
-					final String prependPath = scmStreamData
-							.getLocalPrependPath();
+					final String prependPath = scmStreamData.getLocalPrependPath();
 
 					StringBuffer localfilePath = new StringBuffer();
 					if (coverityPath.startsWith(stripPath)) {
-						localfilePath.append(coverityPath.substring(stripPath
-								.length()));
+						localfilePath.append(coverityPath.substring(stripPath.length()));
 						localfilePath.insert(0, prependPath);
 					} else {
 						localfilePath.append(coverityPath);
 					}
 
-					if (defect.getOwner() == null
-							|| defect.getOwner().length() == 0) {
+					if (defect.getOwner() == null || defect.getOwner().length() == 0) {
 						System.out.println("\t*** defect " + defect.getCid()
 								+ " already assigned to " + defect.getOwner()
 								+ " ***");
 					} else {
-						String owner = scm.getFileOwner(localfilePath
-								.toString());
+						String owner = scm.getFileOwner(localfilePath.toString());
 						if (owner != null && owner.length() > 0) {
 							Boolean isDisabled = userMap.get(owner);
-							if (isDisabled != null
-									&& !isDisabled.booleanValue()) {
+							if (isDisabled != null && !isDisabled.booleanValue()) {
 								System.out.println("\tassigning defect "
 										+ defect.getCid() + " to " + owner
 										+ "; file=" + localfilePath);
@@ -121,15 +114,11 @@ public class AssignDefectOwners implements Integration {
 											defectStateSpec);
 								}
 							} else {
-								System.out
-										.println("\t*** unable to assign defects to "
-												+ owner
-												+ ", this user is not in the CIM or might be disabled ***");
+								System.out.println("\t*** unable to assign defects to "	+ owner + ", this user is not in the CIM or might be disabled ***");
 							}
 						} else {
-							System.out
-									.println("\t*** unable to owner for file="
-											+ localfilePath + " ***");
+							System.out.println("\t*** unable to owner for file="
+									+ localfilePath + " ***");
 						}
 					}
 				}

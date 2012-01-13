@@ -16,9 +16,9 @@ import org.apache.xmlrpc.client.XmlRpcSunHttpTransport;
 import org.apache.xmlrpc.client.XmlRpcSunHttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransport;
 
-import com.coverity.cim.ws.DefectStateCustomAttributeValueDataObj;
-import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.config.ConfigurationManager;
+import com.coverity.ws.v4.DefectStateCustomAttributeValueDataObj;
+import com.coverity.ws.v4.MergedDefectDataObj;
 
 public class Bugzilla implements BugTracking {
 	private List<String> cookies = new ArrayList<String>();

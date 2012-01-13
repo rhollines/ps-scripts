@@ -7,11 +7,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.coverity.cim.ws.DefectStateSpecDataObj;
-import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.common.plugins.bugtracking.BugTracking;
+import com.coverity.ws.v4.DefectStateSpecDataObj;
+import com.coverity.ws.v4.MergedDefectDataObj;
 
 public class ExportDefect {
 	private String inputFile;

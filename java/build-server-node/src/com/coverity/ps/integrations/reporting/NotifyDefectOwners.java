@@ -3,10 +3,10 @@ package com.coverity.ps.integrations.reporting;
 import java.util.List;
 import java.util.Map;
 
-import com.coverity.cim.ws.MergedDefectDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
 import com.coverity.ps.integrations.Integration;
+import com.coverity.ws.v4.MergedDefectDataObj;
 
 /**
  * Creates an e-mail report of defects that have been detected in the 
@@ -27,7 +27,7 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 	public boolean execute() throws Exception {
 		ConfigurationManager configurationManager = ConfigurationManager
 				.getInstance();
-		Map<String, List<MergedDefectDataObj>> defectsByUser = getStreamDefectsByOwner();
+		Map<String, List<MergedDefectDataObj>> defectsByUser = getProjectDefectsByOwner();
 		System.out.println(defectsByUser.size() + " user(s) with new defects");
 		for (Map.Entry<String, List<MergedDefectDataObj>> userDefectValues : defectsByUser.entrySet()) {
 			List<MergedDefectDataObj> userDefects = userDefectValues.getValue();

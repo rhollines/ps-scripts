@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
@@ -15,31 +14,35 @@ import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import com.coverity.cim.ws.ConfigurationService;
-import com.coverity.cim.ws.ConfigurationServiceService;
-import com.coverity.cim.ws.CovRemoteServiceException_Exception;
-import com.coverity.cim.ws.DefectService;
-import com.coverity.cim.ws.DefectServiceService;
-import com.coverity.cim.ws.DefectStateSpecDataObj;
-import com.coverity.cim.ws.MergedDefectDataObj;
-import com.coverity.cim.ws.MergedDefectFilterSpecDataObj;
-import com.coverity.cim.ws.MergedDefectsPageDataObj;
-import com.coverity.cim.ws.PageSpecDataObj;
-import com.coverity.cim.ws.ProjectDataObj;
-import com.coverity.cim.ws.ProjectFilterSpecDataObj;
-import com.coverity.cim.ws.ProjectIdDataObj;
-import com.coverity.cim.ws.ProjectSpecDataObj;
-import com.coverity.cim.ws.StreamDataObj;
-import com.coverity.cim.ws.StreamDefectDataObj;
-import com.coverity.cim.ws.StreamDefectFilterSpecDataObj;
-import com.coverity.cim.ws.StreamDefectIdDataObj;
-import com.coverity.cim.ws.StreamFilterSpecDataObj;
-import com.coverity.cim.ws.StreamIdDataObj;
-import com.coverity.cim.ws.UserDataObj;
-import com.coverity.cim.ws.UserFilterSpecDataObj;
-import com.coverity.cim.ws.UserSpecDataObj;
-import com.coverity.cim.ws.UsersPageDataObj;
 import com.coverity.ps.common.config.ConfigurationManager;
+import com.coverity.ws.v4.ConfigurationService;
+import com.coverity.ws.v4.ConfigurationServiceService;
+import com.coverity.ws.v4.CovRemoteServiceException_Exception;
+import com.coverity.ws.v4.DefectService;
+import com.coverity.ws.v4.DefectServiceService;
+import com.coverity.ws.v4.DefectStateSpecDataObj;
+import com.coverity.ws.v4.MergedDefectDataObj;
+import com.coverity.ws.v4.MergedDefectFilterSpecDataObj;
+import com.coverity.ws.v4.MergedDefectsPageDataObj;
+import com.coverity.ws.v4.PageSpecDataObj;
+import com.coverity.ws.v4.ProjectDataObj;
+import com.coverity.ws.v4.ProjectFilterSpecDataObj;
+import com.coverity.ws.v4.ProjectIdDataObj;
+import com.coverity.ws.v4.ProjectSpecDataObj;
+import com.coverity.ws.v4.RoleAssignmentDataObj;
+import com.coverity.ws.v4.SnapshotFilterSpecDataObj;
+import com.coverity.ws.v4.SnapshotIdDataObj;
+import com.coverity.ws.v4.StreamDataObj;
+import com.coverity.ws.v4.StreamDefectDataObj;
+import com.coverity.ws.v4.StreamDefectFilterSpecDataObj;
+import com.coverity.ws.v4.StreamDefectIdDataObj;
+import com.coverity.ws.v4.StreamFilterSpecDataObj;
+import com.coverity.ws.v4.StreamIdDataObj;
+import com.coverity.ws.v4.StreamSpecDataObj;
+import com.coverity.ws.v4.UserDataObj;
+import com.coverity.ws.v4.UserFilterSpecDataObj;
+import com.coverity.ws.v4.UserSpecDataObj;
+import com.coverity.ws.v4.UsersPageDataObj;
 
 /**
  * Java wrapper around the CIM SOAP APIs
@@ -339,33 +342,51 @@ public class CimProxy {
 		this.configurationService.createUser(specData);
 	}
 	
+	public void createProject(String projectName, List<String> streamNames) throws CovRemoteServiceException_Exception {
+		ProjectSpecDataObj specData = new ProjectSpecDataObj();
+		specData.setName(projectName);
+		List<StreamIdDataObj> streams = specData.getStreams();
+		for(String streamName : streamNames) {
+			StreamIdDataObj streamId = new StreamIdDataObj();
+			streamId.setName(streamName);
+			streams.add(streamId);
+		}
+		createProject(specData);
+	}
+	
 	public void createProject(ProjectSpecDataObj specData) throws CovRemoteServiceException_Exception {
 		this.configurationService.createProject(specData);
+	}
+	
+	public void createStream(StreamSpecDataObj specData) throws CovRemoteServiceException_Exception {
+		this.configurationService.createStream(specData);
+	}
+	
+	public void deleteSnapshot(Long id) throws CovRemoteServiceException_Exception {
+		SnapshotIdDataObj snapshotIdDataObj = new SnapshotIdDataObj();
+		snapshotIdDataObj.setId(id);
+		this.configurationService.deleteSnapshot(snapshotIdDataObj);
+	}
+	
+	public List<SnapshotIdDataObj> getSnapshotsForStream(String name, SnapshotFilterSpecDataObj filterSpec) throws CovRemoteServiceException_Exception {
+		StreamIdDataObj streamId = new StreamIdDataObj();
+		streamId.setName(name);
+		return this.configurationService.getSnapshotsForStream(streamId, filterSpec);
 	}
 	
 	public static void main(String[] args) {
 		try {
 			CimProxy cimProxy = CimProxy.getInstance();
-			List<String> streams = new ArrayList<String>();
-			streams.add("Glenlivet_C");
-			System.out.println("Starting...");
-			long startTime = System.currentTimeMillis();
-			List<MergedDefectDataObj> results = cimProxy
-					.getAllMergedDefectsForStreams(streams);
-			long millis = System.currentTimeMillis() - startTime;
-			
-			String time = String.format("%d min, %d sec", 
-			    TimeUnit.MILLISECONDS.toMinutes(millis),
-			    TimeUnit.MILLISECONDS.toSeconds(millis) - 
-			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
-			);
-			System.out.println("time=" + time);
-			System.out.println("count=" + results.size());
-			/*
-			 * DefectStateSpecDataObj defectStateSpec = new
-			 * DefectStateSpecDataObj(); defectStateSpec.setSeverity("Major");
-			 * cimProxy.updateDefect(10024L, "*\/*", defectStateSpec);
-			 */
+			StreamFilterSpecDataObj specData = new StreamFilterSpecDataObj();
+			specData.setNamePattern("test");
+			List<StreamDataObj> streams =  cimProxy.getStreams(specData);
+			for(StreamDataObj stream : streams) {
+				List<RoleAssignmentDataObj> roles = stream.getRoleAssignments();
+				for(RoleAssignmentDataObj role : roles) {
+					System.out.println("user=" + role.getUsername() + ", role=" + role.getRoleId().getName());
+				}
+			}
+			System.out.println("done.");
 		} catch (CovRemoteServiceException_Exception e) {
 			e.printStackTrace();
 		}

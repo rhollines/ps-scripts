@@ -10,13 +10,13 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.coverity.cim.ws.CovRemoteServiceException_Exception;
-import com.coverity.cim.ws.MergedDefectDataObj;
-import com.coverity.cim.ws.MergedDefectFilterSpecDataObj;
-import com.coverity.cim.ws.ProjectDataObj;
-import com.coverity.cim.ws.UserDataObj;
 import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.integrations.Integration;
+import com.coverity.ws.v4.CovRemoteServiceException_Exception;
+import com.coverity.ws.v4.MergedDefectDataObj;
+import com.coverity.ws.v4.MergedDefectFilterSpecDataObj;
+import com.coverity.ws.v4.ProjectDataObj;
+import com.coverity.ws.v4.UserDataObj;
 
 
 /*
@@ -35,7 +35,7 @@ public abstract class UserDefectReport implements Integration {
 		this.isDryRun = isDryRun;
 	}
 	
-	protected Map<String, List<MergedDefectDataObj>> getStreamDefectsByOwner() throws CovRemoteServiceException_Exception, DatatypeConfigurationException {
+	protected Map<String, List<MergedDefectDataObj>> getProjectDefectsByOwner() throws CovRemoteServiceException_Exception, DatatypeConfigurationException {
 		Map<String, List<MergedDefectDataObj>> defectsByUser = new HashMap<String, List<MergedDefectDataObj>>();
 		CimProxy cimProxy = CimProxy.getInstance();
 		
@@ -61,7 +61,8 @@ public abstract class UserDefectReport implements Integration {
 			
 			// get defects
 			MergedDefectFilterSpecDataObj projectFilter = new MergedDefectFilterSpecDataObj();
-			projectFilter.setFirstDetectedStartDate(lastDetected);List<MergedDefectDataObj> defects = cimProxy.getMergedDefectsForProject(this.projectName, projectFilter);
+			projectFilter.setFirstDetectedStartDate(lastDetected);
+			List<MergedDefectDataObj> defects = cimProxy.getMergedDefectsForProject(this.projectName, projectFilter);
 			for(MergedDefectDataObj defect : defects) {
 				if(userMap.containsKey(defect.getOwner())) {
 					List<MergedDefectDataObj> userDefects = (List<MergedDefectDataObj>)defectsByUser.get(defect.getOwner());
