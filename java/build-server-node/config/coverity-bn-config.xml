@@ -9,10 +9,10 @@
  -->
 	
 	<cim>
-		<address>localhost</address>
+		<address>cov.jf.intel.com</address>
 		<port>8080</port>
 		<user>admin</user>
-		<password>helloworld</password>
+		<password>admin1382</password>
 	</cim>
  
 	<scm>
