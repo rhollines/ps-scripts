@@ -2,7 +2,9 @@ package com.coverity.ps.common.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,6 +32,7 @@ public class ConfigurationManager {
 	private String bugTrackingAddress;
 	private String bugTrackingUser;
 	private String bugTrackingPassword;
+	private Map<String, String> bugProperties;
 	
 	private ConfigurationManager() {
 		try {
@@ -186,6 +189,15 @@ public class ConfigurationManager {
 			}
 			Element bugTrackingPasswordElem = (Element) bugTrackingPasswordNode.item(0);
 			this.bugTrackingPassword = bugTrackingPasswordElem.getTextContent();
+			
+			// get properties
+			this.bugProperties = new HashMap<String, String>();
+			NodeList bugPropertiesNode = systemElem.getElementsByTagName("property");
+			for (int i = 0; i < bugPropertiesNode.getLength(); i++) {
+				Element bugPropertyNode  = (Element) bugPropertiesNode.item(i);
+				bugProperties.put(bugPropertyNode.getAttribute("name"), 
+						bugPropertyNode.getTextContent());
+			}
 		}
 	}
 	
@@ -231,5 +243,9 @@ public class ConfigurationManager {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public Map<String, String> getBugProperties() {
+		return bugProperties;
 	}
 }

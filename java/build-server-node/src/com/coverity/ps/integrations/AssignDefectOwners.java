@@ -64,15 +64,13 @@ public class AssignDefectOwners implements Integration {
 			// load plug-in
 			Class<ScmPlugin> scmClass = (Class<ScmPlugin>) Class.forName(configurationManager.getScmClass());
 			if (scmClass == null) {
-				System.err.println("Unable load SCM plugin: "
-						+ configurationManager.getScmClass() + "!");
+				System.err.println("Unable load SCM plugin: " + configurationManager.getScmClass() + "!");
 				return false;
 			}
 
 			// process defects
 			if (this.isDryRun) {
-				System.out.println("DRY-RUN - stream: "
-						+ scmStreamData.getName() + "; processing "
+				System.out.println("DRY-RUN - stream: "	+ scmStreamData.getName() + "; processing "
 						+ defects.size() + " defect(s)");
 			}
 			ScmPlugin scm = (ScmPlugin) scmClass.newInstance();
@@ -100,16 +98,12 @@ public class AssignDefectOwners implements Integration {
 						if (owner != null && owner.length() > 0) {
 							Boolean isDisabled = userMap.get(owner);
 							if (isDisabled != null && !isDisabled.booleanValue()) {
-								System.out.println("\tassigning defect "
-										+ defect.getCid() + " to " + owner
-										+ "; file=" + localfilePath);
+								System.out.println("\tassigning defect " + defect.getCid() + " to " + owner	+ "; file=" + localfilePath);
 								// update defect owner
 								if (!this.isDryRun) {
 									DefectStateSpecDataObj defectStateSpec = new DefectStateSpecDataObj();
 									defectStateSpec.setOwner(owner);
-									cimProxy.updateDefect(defect.getCid(), "*/"
-											+ scmStreamData.getName(),
-											defectStateSpec);
+									cimProxy.updateDefect(defect.getCid(), "*/"	+ scmStreamData.getName(), defectStateSpec);
 								}
 							} else {
 								System.out.println("\t*** unable to assign defects to "	+ owner + ", this user is not in the CIM or might be disabled ***");
