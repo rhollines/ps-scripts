@@ -84,6 +84,9 @@ public abstract class UserDefectReport implements Integration {
 				}
 			}
 		}
+		else {
+			System.err.println("Unable to find project '" + projectName + "'");
+		}
 		
 		return defectsByUser;
 	}

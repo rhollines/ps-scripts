@@ -14,8 +14,8 @@ public class Subversion implements ScmPlugin {
 	/**
 	 * Returns the username of the last person modified the file
 	 */
-	public String getFileOwner(String filename) {
-		final String command = "svn ls --xml " + filename;
+	public String getFileOwner(String stream, String file) throws Exception {
+		final String command = "svn ls --xml " + file;
 		try {
 			Process process = Runtime.getRuntime().exec(command);
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -37,9 +37,9 @@ public class Subversion implements ScmPlugin {
 
 	public static void main(String[] args) {
 		try {
-			if(args.length > 0) {
+			if(args.length == 2) {
 				Subversion svn = new Subversion();
-				String author = svn.getFileOwner(args[0]);
+				String author = svn.getFileOwner(args[0], "compiler_win");
 				System.out.println("file owner=" + author);
 			}
 		} catch (Exception e) {

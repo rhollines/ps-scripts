@@ -31,11 +31,9 @@ public class ExportDefect {
 		Document document = documentBuilder.parse(inputFile);
 
 		// get mergedDefect tag
-		NodeList projectDefectNode = document.getDocumentElement()
-				.getElementsByTagName("project");
+		NodeList projectDefectNode = document.getDocumentElement().getElementsByTagName("project");
 		if (projectDefectNode.getLength() != 1) {
-			System.err
-					.println("Invalid or missing projectDefect configuration tag!");
+			System.err.println("Invalid or missing projectDefect configuration tag!");
 		}
 		Element projectDefectElem = (Element) projectDefectNode.item(0);
 		this.project = projectDefectElem.getTextContent();

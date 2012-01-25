@@ -32,8 +32,7 @@ public class AssignDefectOwners implements Integration {
 	}
 
 	public boolean execute() throws Exception {
-		ConfigurationManager configurationManager = ConfigurationManager
-				.getInstance();
+		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 		CimProxy cimProxy = CimProxy.getInstance();
 
 		// TODO: add support for project (if needed)
@@ -45,9 +44,8 @@ public class AssignDefectOwners implements Integration {
 			streamFilter.setNamePattern(scmStreamData.getName());
 			List<StreamDataObj> stream = cimProxy.getStreams(streamFilter);
 			if (stream.size() != 1) {
-				System.err
-						.println("Unable to find or uniquely identify stream: "
-								+ scmStreamData.getName() + "!");
+				System.err.println("Unable to find or uniquely identify stream: "
+						+ scmStreamData.getName() + "!");
 				return false;
 			}
 
@@ -98,7 +96,7 @@ public class AssignDefectOwners implements Integration {
 								+ " already assigned to " + defect.getOwner()
 								+ " ***");
 					} else {
-						String owner = scm.getFileOwner(localfilePath.toString());
+						String owner = scm.getFileOwner(scmStreamData.getName(), localfilePath.toString());
 						if (owner != null && owner.length() > 0) {
 							Boolean isDisabled = userMap.get(owner);
 							if (isDisabled != null && !isDisabled.booleanValue()) {

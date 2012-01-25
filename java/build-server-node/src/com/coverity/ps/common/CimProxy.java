@@ -377,14 +377,9 @@ public class CimProxy {
 	public static void main(String[] args) {
 		try {
 			CimProxy cimProxy = CimProxy.getInstance();
-			StreamFilterSpecDataObj specData = new StreamFilterSpecDataObj();
-			specData.setNamePattern("test");
-			List<StreamDataObj> streams =  cimProxy.getStreams(specData);
-			for(StreamDataObj stream : streams) {
-				List<RoleAssignmentDataObj> roles = stream.getRoleAssignments();
-				for(RoleAssignmentDataObj role : roles) {
-					System.out.println("user=" + role.getUsername() + ", role=" + role.getRoleId().getName());
-				}
+			List<UserDataObj> users = cimProxy.getAllUsers();
+			for(UserDataObj user : users) {
+				System.out.println("user=" + user.getUsername());
 			}
 			System.out.println("done.");
 		} catch (CovRemoteServiceException_Exception e) {
