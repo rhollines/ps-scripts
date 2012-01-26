@@ -127,6 +127,6 @@ public class Bugzilla implements BugTracking {
 			return value.toString();
 		}
 		
-		return "";
+		return null;
 	}
 }

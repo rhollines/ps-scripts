@@ -74,6 +74,9 @@ public class ExportDefect {
 				defectStateSpec.setExternalReference(result);
 				cimProxy.updateDefect(this.cid, this.project + "/*", defectStateSpec);
 			}
+			else {
+				throw new Exception("Unable to create defect");
+			}
 		}
 	}
 	
