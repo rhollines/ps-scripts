@@ -1,0 +1,36 @@
+========================
+PSE integration scripts
+========================
+Order of integrations
+0) Export defect
+1) assign defect owners
+2) set defect severities
+3) generate reports
+
+-------------
+Build server	
+-------------
+All integrations use a centralized configuration file that's in the "config" directory.  Executing the commands below will display the respective usage information.
+
+Assign defect owners (runs on a build server or a machine that has access to the SCM system)
+	The correct SCM plug-in must be configured in the "coverity-bn-config.xml" file.
+	java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.AssignDefectOwners
+	
+Set defect severities
+	This integration uses the configuration file "coverity-bn-severity.xml" to map checkers to severities.
+	java -cp .:lib/coverity-ps.jar com.coverity.ps/integrations.AssignSeverity
+	
+Reports - notify defect owners and managers
+	Sends an individual e-mail to each defect owner
+	java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectOwners
+	
+	Sends an e-mail to the specified leads/managers
+	java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectManagers
+
+-------------
+CIM server	
+-------------	
+Export defect (run on CIM)
+	Enable the "Export" button in the CIM.  This is done by putting a file callled "export-defect-handler.(sh|cmd)" into the "<cim_root>/bin" directory.
+	
+	java -cp .;lib/coverity-ps.jar com.coverity.ps.integrations.bugtracking.ExportDefect <input-file> false
