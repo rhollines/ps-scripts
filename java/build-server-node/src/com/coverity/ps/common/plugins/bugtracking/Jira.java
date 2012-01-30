@@ -19,7 +19,9 @@ import com.atlassian.jira.rpc.soap.beans.RemoteVersion;
 import com.atlassian.jira.rpc.soap.jirasoapservice_v2.JiraSoapService;
 import com.atlassian.jira.rpc.soap.jirasoapservice_v2.JiraSoapServiceService;
 import com.atlassian.jira.rpc.soap.jirasoapservice_v2.JiraSoapServiceServiceLocator;
+import com.coverity.ps.common.CimProxy;
 import com.coverity.ps.common.config.ConfigurationManager;
+import com.coverity.ws.v4.CovRemoteServiceException_Exception;
 import com.coverity.ws.v4.MergedDefectDataObj;
 
 public class Jira implements BugTracking {
@@ -29,6 +31,7 @@ public class Jira implements BugTracking {
     private JiraSoapService jiraSoapService;
     private String token;
 	private MergedDefectDataObj defect;
+	private String project;
     
     public Jira(String webServicePort, String userName, String password) throws RemoteException, MalformedURLException {
     	createService(new URL(webServicePort), userName, password);
@@ -56,6 +59,7 @@ public class Jira implements BugTracking {
 
 	public String createBug(String project, MergedDefectDataObj defect, boolean isDryRun) throws Exception {
 		this.defect = defect;
+		this.project = project;
 		Map<String, String> properties = ConfigurationManager.getInstance().getBugProperties();
 		return createIssue(properties);
 	}
@@ -97,7 +101,7 @@ public class Jira implements BugTracking {
 		return null;
 	}
 
-	private String createIssue(Map<String, String> properties) throws java.rmi.RemoteException {
+	private String createIssue(Map<String, String> properties) throws java.rmi.RemoteException, CovRemoteServiceException_Exception {
 		final String issueId = properties.get("issue-type");
 		final String summary;
 		if(this.defect != null) {
@@ -133,7 +137,7 @@ public class Jira implements BugTracking {
 			defectUrl.append(':');
 			defectUrl.append( ConfigurationManager.getInstance().getPort());
 			defectUrl.append("/sourcebrowser.htm?projectId=");
-			defectUrl.append(this.jiraProject);
+			defectUrl.append(CimProxy.getInstance().getProject(this.project).getProjectKey());
 			defectUrl.append("#mergedDefectId=");
 			defectUrl.append(this.defect.getCid());
 			
