@@ -105,10 +105,10 @@ public class Jira implements BugTracking {
 		final String issueId = properties.get("issue-type");
 		final String summary;
 		if(this.defect != null) {
-			summary = properties.get("summary") + " : " + new Date();
+			summary = properties.get("summary") + " : " + this.defect.getCheckerName() + " : " + this.defect.getCid();		
 		}
 		else {
-			summary = properties.get("summary") + " : " + this.defect.getCheckerName() + " : " + this.defect.getCid();
+			summary = properties.get("summary") + " : " + new Date();
 		}
 		final String priority = properties.get("priority");
 		final String component = properties.get("component");
