@@ -94,7 +94,7 @@ public class AssignDefectOwners implements Integration {
 								+ " already assigned to " + defect.getOwner()
 								+ " ***");
 					} else {
-						String owner = scm.getFileOwner(scmStreamData.getName(), localfilePath.toString());
+						String owner = scm.getFileOwner(localfilePath.toString());
 						if (owner != null && owner.length() > 0) {
 							Boolean isDisabled = userMap.get(owner);
 							if (isDisabled != null && !isDisabled.booleanValue()) {
