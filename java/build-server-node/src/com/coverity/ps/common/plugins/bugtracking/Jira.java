@@ -129,7 +129,6 @@ public class Jira implements BugTracking {
 		issue.setType(issueId);
 
 		issue.setSummary(summary);
-		// TODO: map value
 		issue.setPriority(priority);
 		if(this.defect != null) {
 			StringBuilder defectUrl = new StringBuilder("http://");
@@ -158,7 +157,6 @@ public class Jira implements BugTracking {
 			issue.setDescription("Coverity JIRA plug-in testing");
 		}
 		issue.setDuedate(Calendar.getInstance());
-		// TODO: map to jira owner?
 		issue.setAssignee(assignee);
 		issue.setEnvironment(environment);
 		
@@ -182,7 +180,7 @@ public class Jira implements BugTracking {
 		RemoteIssue returnedIssue = jiraSoapService.createIssue(token, issue);
 		final String issueKey = returnedIssue.getKey();
 
-		System.out.println("\tSuccessfully created issue " + issueKey);
+		// System.out.println("\tSuccessfully created issue " + issueKey);
 		// dumpIssue(returnedIssue);
 		
 		return issueKey;
@@ -209,7 +207,6 @@ public class Jira implements BugTracking {
 					Object obj = declaredMethod.invoke(issue, new Object[] {});
 					if (obj instanceof Object[]) {
 						obj = arrayToStr((Object[]) obj);
-					} else {
 					}
 					System.out.println(obj);
 				} catch (IllegalAccessException e) {
