@@ -94,8 +94,9 @@ public class CoveritySaFormatter {
 				errors.append(defects.get(i).getRule());
 				errors.append("</checker><file>");
 				errors.append(defects.get(i).getFileName());
-				errors.append("</file><function>");
-				errors.append(defects.get(i).getFunction().equals("unknown") ? "" :  defects.get(i).getFunction());
+				errors.append("</file>");
+				errors.append("<function>");
+				errors.append(defects.get(i).getFunction().equals("unknown") ? "unknown" :  defects.get(i).getFunction());
 				errors.append("</function>");
 				errors.append("<event><main>true</main><tag>");
 				errors.append(defects.get(i).getEventTag());

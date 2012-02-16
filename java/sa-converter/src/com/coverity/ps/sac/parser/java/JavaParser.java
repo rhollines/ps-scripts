@@ -202,7 +202,6 @@ public class JavaParser implements Parser {
 					classIdent = packageName + '.' + classIdent;
 				}
 				className = classIdent;
-
 //				System.out.println("class='" + className + "'");
 			}
 
@@ -239,7 +238,8 @@ public class JavaParser implements Parser {
 						this.functionMetrics.append("<fnmetric><file>");
 						this.functionMetrics.append(this.filename);
 						this.functionMetrics.append("</file><fnmet>");
-						this.functionMetrics.append(methodName);
+						final String fullMethodName = className + "." + methodName;
+						this.functionMetrics.append(fullMethodName);
 						this.functionMetrics.append("</fnmet></fnmetric>");
 						
 						int start = currentToken.getLineNumber();
@@ -249,7 +249,7 @@ public class JavaParser implements Parser {
 							nextToken();
 
 							if (currentToken.getLineNumber() != start) {
-								functions.put(start, methodName);
+								functions.put(start, fullMethodName);
 								start = currentToken.getLineNumber();
 							}
 

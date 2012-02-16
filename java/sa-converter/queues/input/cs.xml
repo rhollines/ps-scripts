@@ -595,7 +595,4 @@
 <error line="40" column="5" severity="error" message="Method &apos;getPort&apos; is not designed for extension - needs to be abstract, final or empty." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
 <error line="40" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
 </file>
-<file name="C:\Users\rhollines\Documents\sac\checkstyle\com.puppycrawl.tools.checkstyle.Main">
-<error line="0" severity="error" message="File not found!" source="com.puppycrawl.tools.checkstyle.Checker"/>
-</file>
 </checkstyle>

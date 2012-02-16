@@ -210,7 +210,7 @@ public class InputParser {
 			versionEmitFile = new FileWriter(CoveritySaFormatter.OUTPUT_PATH
 					+ "/emit/version");
 			versionEmitFile
-					.write("# Version file created with Prevent version 5.4.1\n50");
+					.write("# Version file created with Prevent version 5.4.1\n64");
 			domainEmitFile = new FileWriter(CoveritySaFormatter.OUTPUT_PATH
 					+ "/emit/cov-domain-tag");
 			domainEmitFile.write("C#\n");
@@ -218,7 +218,7 @@ public class InputParser {
 			versionOutputFile = new FileWriter(CoveritySaFormatter.OUTPUT_PATH
 					+ "/output/version");
 			versionOutputFile
-					.write("# Version file created with Prevent version 5.4.1\n50");
+					.write("# Version file created with Prevent version 5.4.1\n64");
 			domainOutputFile = new FileWriter(CoveritySaFormatter.OUTPUT_PATH
 					+ "/output/cov-domain-tag");
 			domainOutputFile.write("C#\n");
@@ -371,8 +371,7 @@ public class InputParser {
 							}
 
 							// get function
-							String function = parser.getFunction(Integer
-									.parseInt(line));
+							String function = parser.getFunction(Integer.parseInt(line));
 
 							// get description
 							NodeList descNodes = (NodeList) descExpr.evaluate(
