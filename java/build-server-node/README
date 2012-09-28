@@ -1,0 +1,32 @@
+========================
+PSE integration scripts
+========================
+Order of integrations
+0) commit defect
+1) assign defect owners
+2) set defect severities
+3) nofity owners and managers
+
+-------------
+Build server	
+-------------
+All integrations use a centralized configuration file that's in the "config" directory.  Executing the commands below will display the respective usage information.
+
+Assign defect owners after a scan has been performed (runs on the build server)
+	The correct SCM plug-in must be configured in the "coverity-bn-config.xml" file.
+	script: set-ownership.bat; [options - is_dry_run (true|false)]
+	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.AssignDefectOwners
+	
+Set defect severities after a scan has been performed
+	This integration uses the configuration file "coverity-bn-severity.xml" to map checkers to severities.
+	script: set-defect-severity.bat; [options - stream _name, is_dry_run (true|false)]
+	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps/integrations.AssignSeverity
+	
+Reports - notify defect owners and managers
+	Sends an individual e-mail to each defect owner
+	script: notify-owners.bat; [options - project_name, number of days in the past, is_dry_run (true|false)]
+	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectOwners
+	
+	Sends an e-mail to the specified leads/managers
+	script: notify-managers.bat; [options - project_name, number of days in the past, is_dry_run (true|false)]
+	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectManagers

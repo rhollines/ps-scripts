@@ -316,11 +316,6 @@ public class JavaScanner {
 				nextChar();
 				break;
 				
-			case '@':
-				token = new Token(lineNumber, Token.Type.AT, ")");
-				nextChar();
-				break;
-
 			case '=':
 				token = new Token(lineNumber, Token.Type.EQL, "=");
 				nextChar();

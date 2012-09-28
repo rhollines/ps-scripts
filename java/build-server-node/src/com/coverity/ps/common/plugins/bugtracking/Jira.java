@@ -5,10 +5,20 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.rpc.ServiceException;
 
 import com.atlassian.jira.rpc.soap.beans.RemoteComponent;
@@ -26,14 +36,31 @@ import com.coverity.ws.v4.MergedDefectDataObj;
 
 public class Jira implements BugTracking {
 	// Constants for issue creation
+	static TrustManager[] trustAllCerts;
+	static HostnameVerifier hv;
 	String jiraProject;
 	private JiraSoapServiceService jiraSoapServiceLocator;
     private JiraSoapService jiraSoapService;
     private String token;
 	private MergedDefectDataObj defect;
 	private String project;
+	
+	// set proxy settings
+	static {
+		// proxy settings
+    	System.setProperty("https.proxyHost", "proxy.jf.intel.com");
+    	System.setProperty("https.proxyPort", "911");
+    	System.setProperty("https.proxySet", "true");
+	}
     
-    public Jira(String webServicePort, String userName, String password) throws RemoteException, MalformedURLException {
+    public Jira(String webServicePort, String userName, String password) throws RemoteException, MalformedURLException, NoSuchAlgorithmException, KeyManagementException {
+    	// disabling certificate validation
+    	disableCertificateValidation();
+		SSLContext sc = SSLContext.getInstance("SSL");
+		sc.init(null, trustAllCerts, new SecureRandom());
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		HttpsURLConnection.setDefaultHostnameVerifier(hv);
+    	
     	createService(new URL(webServicePort), userName, password);
     }
     
@@ -83,7 +110,7 @@ public class Jira implements BugTracking {
 			}
 		}
 		
-		return null;
+		return new RemoteVersion();
 	}
 	
 	private RemoteCustomFieldValue createCustomFieldValue(String name, String value) throws java.rmi.RemoteException {
@@ -165,14 +192,14 @@ public class Jira implements BugTracking {
 		
 		// Add remote versions
 		issue.setAffectsVersions(new RemoteVersion[] { getVersion(version) } );
-
+		
 		// Add custom fields
 		// TODO: map custom values that defect
 		RemoteCustomFieldValue[] customFieldValues = new RemoteCustomFieldValue[] { 
-			createCustomFieldValue("Reproducibility", "10060"),
-			createCustomFieldValue("Profile/s", "COM1"),
-			createCustomFieldValue("Defect Classification", "10014"),
-			createCustomFieldValue("Severity", "10064")
+			createCustomFieldValue("Reproducibility", "10606"), // 100%
+			createCustomFieldValue("Profile/s", "10811"), // smart phone
+			createCustomFieldValue("Defect Classification", "10836"), // security
+			createCustomFieldValue("Severity", "10006") // normal
 		};
 		issue.setCustomFieldValues(customFieldValues);
 		
@@ -226,6 +253,23 @@ public class Jira implements BugTracking {
 		return sb.toString();
 	}
 	
+	public static void disableCertificateValidation() {
+	  // Create a trust manager that does not validate certificate chains
+	  trustAllCerts = new TrustManager[] { 
+		new X509TrustManager() {
+		  public X509Certificate[] getAcceptedIssuers() { 
+			return new X509Certificate[0]; 
+		  }
+		  public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+		  public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+	  }};
+
+	  // Ignore differences between given hostname and certificate hostname
+	  hv = new HostnameVerifier() {
+		public boolean verify(String hostname, SSLSession session) { return true; }
+	  };
+	}
+	
 	/*
 	 * Main command line driver. Please see class constructor for required arguments.
 	 */
@@ -233,8 +277,8 @@ public class Jira implements BugTracking {
 		try {
 			Map<String, String> properties = ConfigurationManager.getInstance().getBugProperties();
 			Jira jira = new Jira(
-					"http://jiradev.sh.intel.com:8080/jira/rpc/soap/jirasoapservice-v2?wsdl",
-					"admin1", "jira.test");
+					"https://tz.otcshare.org/jira/rpc/soap/jirasoapservice-v2?wsdl",
+					"coverityuser", "COVERITY.123");
 			jira.createIssue(properties);
 		} catch (Exception e) {
 			e.printStackTrace();

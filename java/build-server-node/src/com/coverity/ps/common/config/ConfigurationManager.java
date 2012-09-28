@@ -107,28 +107,30 @@ public class ConfigurationManager {
 			}
 			Element systemElem = (Element) systemNode.item(0);
 			this.scmClass = systemElem.getAttribute("class");
+			Map<String, String> data = new HashMap<String, String>();
 			
 			// stream data
 			NodeList streamNodes = systemElem.getElementsByTagName("stream");
 			for(int i = 0; i < streamNodes.getLength(); i++) {
 				Element streamElem = (Element) streamNodes.item(i);
 				String name = streamElem.getAttribute("name");
+				data.put("name", name);				
+				String cimStripPath = getElement(systemElem, "cim-strip-path", 1);
 				
-				NodeList cimStripPathNode = systemElem.getElementsByTagName("cim-strip-path");
-				if (cimStripPathNode.getLength() != 1) {
-					System.err.println("Invalid or missing cimStripPath configuration tag!");
-				}
-				Element cimStripPathElem = (Element) cimStripPathNode.item(0);
-				String cimStripPath = cimStripPathElem.getTextContent();
+				if (cimStripPath != null)
+				   data.put("cimStripPath", cimStripPath);
+
+				String localPrependPath = getElement(systemElem, "local-prepend-path", 1);
 				
-				NodeList localPrependPathNode = systemElem.getElementsByTagName("local-prepend-path");
-				if (localPrependPathNode.getLength() != 1) {
-					System.err.println("Invalid or missing localPrependPath configuration tag!");
-				}
-				Element localPrependPathElem = (Element) localPrependPathNode.item(0);
-				String localPrependPath = localPrependPathElem.getTextContent();
+				if (localPrependPath != null)
+				   data.put("localPrependPath", localPrependPath);
+				   
+				String repository = getElement(systemElem, "repository", 1);
+
+				if (repository != null)
+  				   data.put("repository", repository);
 				
-				this.scmStreamData.add(new ScmConfigData(name, cimStripPath, localPrependPath));
+				scmStreamData.add(new ScmConfigData(data));
 			}
 			
 /*			
@@ -156,7 +158,7 @@ public class ConfigurationManager {
 			}
 */			
 		}
-		
+					
 		// get bug tracking tag
 		NodeList bugTrackingNode = document.getDocumentElement().getElementsByTagName("bug-tracking");
 		if (bugTrackingNode.getLength() == 1) {
@@ -200,7 +202,18 @@ public class ConfigurationManager {
 			}
 		}
 	}
+
 	
+	private String getElement(Element systemElem, String name, int nbElements) {
+		NodeList nl = systemElem.getElementsByTagName(name);
+		if (nl.getLength() != nbElements) {
+			System.err.println("Invalid or missing " + name + " configuration tag!");
+			return null;
+		}
+		Element elem = (Element) nl.item(0);
+		return elem.getTextContent();
+	}
+			
 	public String getBugTrackingClass() {
 		return bugTrackingClass;
 	}

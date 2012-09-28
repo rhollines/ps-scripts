@@ -174,7 +174,7 @@ public class JavaParser implements Parser {
 	}
 
 	/**
-	 * Parses ActionScript file
+	 * Parses Java file
 	 * 
 	 * @throws IOException
 	 */

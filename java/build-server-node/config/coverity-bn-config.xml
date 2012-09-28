@@ -33,17 +33,17 @@
 		</system>
 -->			
 		<system class="com.coverity.ps.common.plugins.bugtracking.Jira">
-			<address>http://jiradev.sh.intel.com:8080/jira/rpc/soap/jirasoapservice-v2?wsdl</address>
-			<user>admin1</user>
-			<password>jira.test</password>
+			<address>https://tz.otcshare.org/jira/rpc/soap/jirasoapservice-v2?wsdl</address>
+			<user>coverityuser</user>
+			<password>COVERITY.123</password>
 			<properties>
-				<property name="project">DEMO</property>
+				<property name="project">TZCOV</property>
 				<property name="issue-type">1</property>
 				<property name="summary">Coverity Defect</property>
 				<property name="priority">4</property>
-				<property name="component">COM1</property>
+				<property name="component">coverity</property>
 				<property name="version">1.0</property>
-				<property name="assignee">Admin1</property>
+				<property name="assignee">coverityuser</property>
 				<property name="environment">Test</property>
 			</properties>
 		</system>

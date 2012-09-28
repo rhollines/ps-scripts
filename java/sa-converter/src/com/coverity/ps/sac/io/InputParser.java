@@ -448,7 +448,7 @@ public class InputParser {
 						+ " function(s)");
 			} else {
 				System.out
-						.println("No defects where deteced or no files where scanned.");
+						.println("No defects where deteced or no files were scanned.");
 				System.exit(1);
 			}
 		} catch (ParserConfigurationException e) {

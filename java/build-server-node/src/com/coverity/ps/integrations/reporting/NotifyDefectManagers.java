@@ -110,14 +110,17 @@ public class NotifyDefectManagers extends UserDefectReport implements Integratio
 		
 		html.append("</body></html>");
 		
-		if(this.isDryRun) {
-			System.out.println(html);
-		}
-		else {
-			final String subject = "New Coverity defects";
-			List<String> recipients = CimProxy.getInstance().notify(this.users, subject, html.toString());
-			for(String recipient : recipients) {
-				System.out.println("e-mail sucessfully sent to " + recipient);
+		if(defectsByUser.size() > 0) {
+			if(this.isDryRun) {
+				System.out.println(html);
+				System.out.println("Recipients would would receive e-mail: " + this.users);
+			}
+			else {
+				final String subject = "New Coverity defects";
+				List<String> recipients = CimProxy.getInstance().notify(this.users, subject, html.toString());
+				for(String recipient : recipients) {
+					System.out.println("e-mail sucessfully sent to " + recipient);
+				}
 			}
 		}
 		
