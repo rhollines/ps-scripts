@@ -23,8 +23,7 @@ public class Subversion implements ScmPlugin {
 			Document document = documentBuilder.parse(process.getInputStream());
 			
 			// get author tag
-			NodeList authorNode = document.getDocumentElement()
-					.getElementsByTagName("author");
+			NodeList authorNode = document.getDocumentElement().getElementsByTagName("author");
 			if (authorNode.getLength() != 1) {
 				return "";
 			}
@@ -35,9 +34,14 @@ public class Subversion implements ScmPlugin {
 		}
 	}
 
+	/**
+	 * Command line test
+	 * 
+	 * @param args file name
+	 */
 	public static void main(String[] args) {
 		try {
-			if(args.length == 2) {
+			if(args.length == 1) {
 				Subversion svn = new Subversion();
 				String author = svn.getFileOwner(args[0]);
 				System.out.println("file owner=" + author);

@@ -135,10 +135,8 @@ public class AssignDefectOwners implements Integration {
 					System.out.println("\n*** Unsuccessful ***");
 				}
 			} else {
-				System.err
-						.println("This program assigns defects to the people who last modified a given file.");
-				System.err.println("usage: java "
-						+ AssignDefectOwners.class.getName() + " <is-dry-run>");
+				System.err.println("This program assigns defects to the people who last modified a given file.");
+				System.err.println("usage: java " + AssignDefectOwners.class.getName() + " <is-dry-run>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

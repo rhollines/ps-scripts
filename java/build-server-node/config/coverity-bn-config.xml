@@ -1,37 +1,27 @@
 <coverity-bn-config>
-<!--
 	<cim>
-		<address>10.100.0.8</address>
+		<address>localhost</address>
 		<port>8080</port>
 		<user>admin</user>
-		<password>cisco123</password>
+		<password>helloworld</password>
 	</cim>
- -->
-	
-	<cim>
-		<address>cov.jf.intel.com</address>
-		<port>8080</port>
-		<user>admin</user>
-		<password>admin1382</password>
-	</cim>
- 
+ 	
 	<scm>
- 		<system class="com.coverity.ps.scm.Subversion">
+ 		<system class="com.coverity.ps.common.plugins.scm.Subversion">
 			<stream name="compiler_posix"> 
 				<cim-strip-path></cim-strip-path>
-				<local-prepend-path>C:/Users/rhollines/Documents/Demo/src</local-prepend-path>
+				<local-prepend-path></local-prepend-path>
+				<repository></repository>
 			</stream>
 		</system>
 	</scm>
 
-	<bug-tracking>
 <!--	
+	<bug-tracking>
 		<system class="com.coverity.ps.common.plugins.bugtracking.Jira">
-			<address>http://bugz-test.dev.xxx.com/bugz/xmlrpc.cgi</address>
 			<user>cov_test@xxx.com</user>
 			<password>covcim</password>
 		</system>
--->			
 		<system class="com.coverity.ps.common.plugins.bugtracking.Jira">
 			<address>https://tz.otcshare.org/jira/rpc/soap/jirasoapservice-v2?wsdl</address>
 			<user>coverityuser</user>
@@ -46,7 +36,8 @@
 				<property name="assignee">coverityuser</property>
 				<property name="environment">Test</property>
 			</properties>
-		</system>
+		</system>	
 	</bug-tracking>
+-->	
 
 </coverity-bn-config>

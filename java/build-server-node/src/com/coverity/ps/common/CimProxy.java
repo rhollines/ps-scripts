@@ -160,15 +160,19 @@ public class CimProxy {
 		int offset = 0;
 		MergedDefectsPageDataObj page = null;
 		List<MergedDefectDataObj> results = new ArrayList<MergedDefectDataObj>();
+		boolean empty = false;
 		do {
 			pageSpec.setStartIndex(offset);
 			page = this.defectService.getMergedDefectsForStreams(streamIds,
 					filterSpec, pageSpec);
 			results.addAll(page.getMergedDefects());
-
-			count += page.getMergedDefects().size();
-			offset += pageSize;
-		} while (count < page.getTotalNumberOfRecords());
+			
+			empty = page.getMergedDefects().size() == 0;
+			if(!empty) {
+				count += page.getMergedDefects().size();
+				offset += pageSize;
+			}
+		} while (count < page.getTotalNumberOfRecords() && !empty);
 
 		return results;
 	}
@@ -198,15 +202,19 @@ public class CimProxy {
 		int offset = 0;
 		MergedDefectsPageDataObj page = null;
 		List<MergedDefectDataObj> results = new ArrayList<MergedDefectDataObj>();
+		boolean empty = false;
 		do {
 			pageSpec.setStartIndex(offset);
 			page = this.defectService.getMergedDefectsForProject(projectId,
 					filterSpec, pageSpec);
 			results.addAll(page.getMergedDefects());
 
-			count += page.getMergedDefects().size();
-			offset += pageSize;
-		} while (count < page.getTotalNumberOfRecords());
+			empty = page.getMergedDefects().size() == 0;
+			if(!empty) {
+				count += page.getMergedDefects().size();
+				offset += pageSize;
+			}
+		} while (count < page.getTotalNumberOfRecords() && !empty);
 
 		return results;
 	}
@@ -244,15 +252,19 @@ public class CimProxy {
 		int offset = 0;
 		UsersPageDataObj page = null;
 		List<UserDataObj> results = new ArrayList<UserDataObj>();
+		boolean empty = false;
 		do {
 			pageSpec.setStartIndex(offset);
 			page = this.configurationService.getUsers(userFilterSpecDO,
 					pageSpec);
 			results.addAll(page.getUsers());
 
-			count += page.getUsers().size();
-			offset += pageSize;
-		} while (count < page.getTotalNumberOfRecords());
+			empty = page.getUsers().size() == 0;
+			if(!empty) {
+				count += page.getUsers().size();
+				offset += pageSize;
+			}
+		} while (count < page.getTotalNumberOfRecords() && !empty);
 
 		return results;
 	}
