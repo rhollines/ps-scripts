@@ -13,6 +13,11 @@
 				<local-prepend-path></local-prepend-path>
 				<repository></repository>
 			</stream>
+			<stream name="vm_posix"> 
+				<cim-strip-path></cim-strip-path>
+				<local-prepend-path></local-prepend-path>
+				<repository></repository>
+			</stream>
 		</system>
 	</scm>
 

@@ -115,17 +115,17 @@ public class ConfigurationManager {
 				Element streamElem = (Element) streamNodes.item(i);
 				String name = streamElem.getAttribute("name");
 				data.put("name", name);				
-				String cimStripPath = getElement(systemElem, "cim-strip-path", 1);
+				String cimStripPath = getElement(streamElem, "cim-strip-path", 1);
 				
 				if (cimStripPath != null)
 				   data.put("cimStripPath", cimStripPath);
 
-				String localPrependPath = getElement(systemElem, "local-prepend-path", 1);
+				String localPrependPath = getElement(streamElem, "local-prepend-path", 1);
 				
 				if (localPrependPath != null)
 				   data.put("localPrependPath", localPrependPath);
 				   
-				String repository = getElement(systemElem, "repository", 1);
+				String repository = getElement(streamElem, "repository", 1);
 
 				if (repository != null)
   				   data.put("repository", repository);

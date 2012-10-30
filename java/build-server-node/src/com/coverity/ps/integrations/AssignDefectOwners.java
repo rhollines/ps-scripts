@@ -36,8 +36,7 @@ public class AssignDefectOwners implements Integration {
 		CimProxy cimProxy = CimProxy.getInstance();
 
 		// TODO: add support for project (if needed)
-		List<ScmConfigData> scmStreams = configurationManager
-				.getScmStreamData();
+		List<ScmConfigData> scmStreams = configurationManager.getScmStreamData();
 		for (ScmConfigData scmStreamData : scmStreams) {
 			// check streams
 			StreamFilterSpecDataObj streamFilter = new StreamFilterSpecDataObj();
@@ -75,8 +74,7 @@ public class AssignDefectOwners implements Integration {
 			}
 			ScmPlugin scm = (ScmPlugin) scmClass.newInstance();
 			for (MergedDefectDataObj defect : defects) {
-				if (defect.getStatus().equals("New")
-						&& defect.getOwner().equals("Unassigned")) {
+				if (defect.getStatus().equals("New") && defect.getOwner().equals("Unassigned")) {
 					final String coverityPath = defect.getFilePathname();
 					final String stripPath = scmStreamData.getCimStripPath();
 					final String prependPath = scmStreamData.getLocalPrependPath();
@@ -127,8 +125,7 @@ public class AssignDefectOwners implements Integration {
 	public static void main(String[] args) {
 		try {
 			if (args.length == 1) {
-				AssignDefectOwners assignDefectOwners = new AssignDefectOwners(
-						args[0].equalsIgnoreCase("true"));
+				AssignDefectOwners assignDefectOwners = new AssignDefectOwners(args[0].equalsIgnoreCase("true"));
 				if (assignDefectOwners.execute()) {
 					System.out.println("\nSuccessful!");
 				} else {
