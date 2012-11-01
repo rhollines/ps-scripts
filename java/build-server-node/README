@@ -10,19 +10,19 @@ Order of integrations
 -------------
 Build server	
 -------------
-All integrations use a centralized configuration file that's in the "config" directory.  Executing the commands below will display the respective usage information.
+All integrations use a centralized configuration file "config/coverity-bn-config.xml", which is documented below.  Executing the commands below will display the respective usage information.
 
-Assign defect owners after a scan has been performed (runs on the build server)
+Assigns defect owners after a scan has been performed
 	The correct SCM plug-in must be configured in the "coverity-bn-config.xml" file.
 	script: set-ownership.bat; [options - is_dry_run (true|false)]
 	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.AssignDefectOwners
 	
-Set defect severities after a scan has been performed
+Sets the severity of defects after a scan has been performed
 	This integration uses the configuration file "coverity-bn-severity.xml" to map checkers to severities.
 	script: set-defect-severity.bat; [options - stream _name, is_dry_run (true|false)]
 	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps/integrations.AssignSeverity
 	
-Reports - notify defect owners and managers
+Reports - notify defect owners and managers of new defects that have been found in the past N number of days
 	Sends an individual e-mail to each defect owner
 	script: notify-owners.bat; [options - project_name, number of days in the past, is_dry_run (true|false)]
 	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectOwners
@@ -30,3 +30,37 @@ Reports - notify defect owners and managers
 	Sends an e-mail to the specified leads/managers
 	script: notify-managers.bat; [options - project_name, recipients, number of days in the past, is_dry_run (true|false)]
 	direct: java -cp .:lib/coverity-ps.jar com.coverity.ps.integrations.reporting.NotifyDefectManagers
+	
+The following wrapper scripts have been provide as a convenience:
+	* notify-managers.(bat|sh)
+	* notify-owners.(bat|sh)
+	* set-defect-severity.(bat|sh)
+	* set-ownership.(bat|sh)
+	
+==========================================	
+	
+Sample XML file with inline comments
+
+<coverity-bn-config>
+	<cim>
+		<address>localhost</address> // address of the CIM server 
+		<port>8080</port> // port of the CIM server
+		<user>admin</user> // commit user (must have required permissions to perform the above actions) 
+		<password>helloworld</password> (commit user's password)
+	</cim>
+	 	
+	<scm>
+		<system class="com.coverity.ps.common.plugins.scm.Subversion"> // Subversion plug-in
+			<stream name="compiler_posix"> 
+				<cim-strip-path></cim-strip-path> // text to strip from the front of the path
+				<local-prepend-path></local-prepend-path> // text to append to the end of the path
+				<repository></repository> // not required
+			</stream>
+			<stream name="vm_posix"> // same as above...
+				<cim-strip-path></cim-strip-path>
+				<local-prepend-path></local-prepend-path>
+				<repository></repository>
+			</stream>
+		</system>
+	</scm>	
+</coverity-bn-config>
