@@ -131,32 +131,7 @@ public class ConfigurationManager {
   				   data.put("repository", repository);
 				
 				scmStreamData.add(new ScmConfigData(data));
-			}
-			
-/*			
-			// project data
-			NodeList projectNodes = systemElem.getElementsByTagName("project");
-			for(int i = 0; i < projectNodes.getLength(); i++) {
-				Element projectElem = (Element) projectNodes.item(i);
-				String name = projectElem.getAttribute("name");
-				
-				NodeList cimStripPathNode = systemElem.getElementsByTagName("cim-strip-path");
-				if (cimStripPathNode.getLength() != 1) {
-					System.err.println("Invalid or missing cimStripPath configuration tag!");
-				}
-				Element cimStripPathElem = (Element) cimStripPathNode.item(0);
-				String cimStripPath = cimStripPathElem.getTextContent();
-				
-				NodeList localPrependPathNode = systemElem.getElementsByTagName("local-prepend-path");
-				if (localPrependPathNode.getLength() != 1) {
-					System.err.println("Invalid or missing localPrependPath configuration tag!");
-				}
-				Element localPrependPathElem = (Element) localPrependPathNode.item(0);
-				String localPrependPath = localPrependPathElem.getTextContent();
-				
-				this.scmProjectData.add(new ScmConfigData(name, cimStripPath, localPrependPath));
-			}
-*/			
+			}			
 		}
 					
 		// get bug tracking tag

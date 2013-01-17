@@ -8,7 +8,7 @@ Order of integrations
 3) notify owners and managers
 
 -------------
-Build server	
+Build server
 -------------
 All integrations use a centralized configuration file "config/coverity-bn-config.xml", which is documented below.  Executing the commands below will display the respective usage information.
 

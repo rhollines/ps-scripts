@@ -1,0 +1,9 @@
+<coverity-bn-component>
+	<component name="Other">
+		<user>rhollines</user>
+		<user>admin</user>
+	</component>
+	<component name="STX">
+		<user>admin</user>
+	</component>
+</coverity-bn-component>

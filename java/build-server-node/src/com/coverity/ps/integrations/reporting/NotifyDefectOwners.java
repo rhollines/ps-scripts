@@ -80,6 +80,9 @@ public class NotifyDefectOwners extends UserDefectReport implements Integration 
 					if(recipient.length() > 0) {
 						System.out.println("e-mail sucessfully sent to " + recipient);
 					}
+					else {
+						System.out.println("*** Unable to e-mail " + recipient + " ***");
+					}
 				}
 			}
 		}
