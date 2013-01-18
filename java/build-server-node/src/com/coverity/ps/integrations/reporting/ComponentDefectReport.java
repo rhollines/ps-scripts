@@ -26,6 +26,7 @@ public abstract class ComponentDefectReport implements Integration {
 	protected String projectName;
 	protected int days;
 	protected long projectId;
+	protected XMLGregorianCalendar lastDetected;
 	
 	protected ComponentDefectReport(String project, int days, boolean isDryRun) {
 		this.projectName = project;
@@ -46,13 +47,13 @@ public abstract class ComponentDefectReport implements Integration {
 			final long oneDay = 1000 * 60 * 60 * 24;
 			GregorianCalendar calendar = new GregorianCalendar();
 			calendar.setTimeInMillis(System.currentTimeMillis() - this.days * oneDay);
-			XMLGregorianCalendar lastDetected = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+			this.lastDetected = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
 			
-			System.out.println("as-of-date=" + lastDetected);
+			System.out.println("as-of-date=" + this.lastDetected);
 			
 			// get defects
 			MergedDefectFilterSpecDataObj projectFilter = new MergedDefectFilterSpecDataObj();
-			projectFilter.setFirstDetectedStartDate(lastDetected);
+			projectFilter.setFirstDetectedStartDate(this.lastDetected);
 			List<MergedDefectDataObj> defects = cimProxy.getMergedDefectsForProject(this.projectName, projectFilter);
 			for(MergedDefectDataObj defect : defects) {
 				// TODO: error checking...

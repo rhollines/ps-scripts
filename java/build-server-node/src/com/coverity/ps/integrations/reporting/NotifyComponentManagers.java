@@ -116,7 +116,7 @@ public class NotifyComponentManagers {
 
 			// column totals
 			int totalNew = 0;
-			int totalOutstanding = 0;
+			int totalTriaged = 0;
 			int totalResolved = 0;
 			int totalTotal = 0;
 
@@ -128,7 +128,7 @@ public class NotifyComponentManagers {
 				final String checkerName = (String) checkerDefectEntries
 						.getKey();
 				int checkerNew = 0;
-				int checkerOutstanding = 0;
+				int checkerTriaged = 0;
 				int checkerResolved = 0;
 				for (MergedDefectDataObj checkerDefect : checkerDefects) {
 					// new
@@ -137,7 +137,7 @@ public class NotifyComponentManagers {
 					}
 					// outstanding
 					else if (checkerDefect.getStatus().equals("Triaged")) {
-						checkerOutstanding++;
+						checkerTriaged++;
 					}
 					// resolved: note assume dismissed and fixed
 					else if (checkerDefect.getStatus().equals("Dismissed")
@@ -167,7 +167,7 @@ public class NotifyComponentManagers {
 				html.append(checkerNew);
 				html.append("</td>");
 				html.append(td);
-				html.append(checkerOutstanding);
+				html.append(checkerTriaged);
 				html.append("</td>");
 				html.append(td);
 				html.append(checkerResolved);
@@ -178,7 +178,7 @@ public class NotifyComponentManagers {
 				
 				// update
 				totalNew += checkerNew;
-				totalOutstanding += checkerOutstanding;
+				totalTriaged += checkerTriaged;
 				totalResolved += checkerResolved;
 				totalTotal += checkerDefects.size();
 				
@@ -194,7 +194,7 @@ public class NotifyComponentManagers {
 			html.append(totalNew);
 			html.append("</td>");
 			html.append(td);
-			html.append(totalOutstanding);
+			html.append(totalTriaged);
 			html.append("</td>");
 			html.append(td);
 			html.append(totalResolved);
@@ -217,7 +217,6 @@ public class NotifyComponentManagers {
 					System.out.println("e-mail sucessfully sent to " + recipient);
 				}
 			}
-
 		}
 
 		return true;
