@@ -9,15 +9,8 @@ import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.coverity.ps.common.CimProxy;
-import com.coverity.ps.integrations.Integration;
 import com.coverity.ws.v4.CovRemoteServiceException_Exception;
 import com.coverity.ws.v4.MergedDefectDataObj;
 import com.coverity.ws.v4.MergedDefectFilterSpecDataObj;
@@ -54,14 +47,12 @@ public class NotifyComponentManagers {
 		}
 	}
 
-	private List<MergedDefectDataObj> getProjectDefects()
-			throws CovRemoteServiceException_Exception,
-			DatatypeConfigurationException {
+	private List<MergedDefectDataObj> getProjectDefects() throws CovRemoteServiceException_Exception, DatatypeConfigurationException {
 		// get project id
 		ProjectDataObj projectData = CimProxy.getInstance().getProject(
 				projectName);
 		if (projectData != null) {
-						// calculate as-of date
+			// calculate as-of date
 			final long oneDay = 1000 * 60 * 60 * 24;
 			GregorianCalendar calendar = new GregorianCalendar();
 			calendar.setTimeInMillis(System.currentTimeMillis() - this.days
@@ -121,12 +112,13 @@ public class NotifyComponentManagers {
 			html.append("	background-color: #BDBDBD; color: black;");
 			html.append("}");
 			html.append("</style>");
-			html.append("<br/><table border=\"1\" cellpadding=\"3\"><tr> <th>Checker</th> <th>New</th> <th>Outstanding</th> <th>Resolved</th></tr>");
+			html.append("<br/><table border=\"1\" cellpadding=\"3\"><tr> <th>Checker</th> <th>New</th> <th>Outstanding</th> <th>Resolved</th> <th>Total</th></tr>");
 
 			// column totals
 			int totalNew = 0;
 			int totalOutstanding = 0;
 			int totalResolved = 0;
+			int totalTotal = 0;
 
 			int i = 0;
 			for (Map.Entry<String, List<MergedDefectDataObj>> checkerDefectEntries : defectsByChecker
@@ -179,12 +171,17 @@ public class NotifyComponentManagers {
 				html.append("</td>");
 				html.append(td);
 				html.append(checkerResolved);
+				html.append("</td>");
+				html.append(td);
+				html.append(checkerDefects.size());
 				html.append("</td></tr>");
-
+				
 				// update
 				totalNew += checkerNew;
 				totalOutstanding += checkerOutstanding;
 				totalResolved += checkerResolved;
+				totalTotal += checkerDefects.size();
+				
 				i++;
 			}
 
@@ -201,6 +198,9 @@ public class NotifyComponentManagers {
 			html.append("</td>");
 			html.append(td);
 			html.append(totalResolved);
+			html.append("</td>");
+			html.append(td);
+			html.append(totalTotal);
 			html.append("</td></tr>");
 			html.append("</table></body></html>");
 
@@ -208,7 +208,6 @@ public class NotifyComponentManagers {
 			
 			// e-mail to component owners
 			if(this.isDryRun) {
-				System.out.println(html);
 				System.out.println("Recipients that would have received e-mail(s): " + this.users);
 			}
 			else {
