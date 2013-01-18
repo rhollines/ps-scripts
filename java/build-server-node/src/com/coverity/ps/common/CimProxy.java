@@ -15,6 +15,8 @@ import javax.xml.ws.handler.Handler;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import com.coverity.ps.common.config.ConfigurationManager;
+import com.coverity.ws.v4.ComponentIdDataObj;
+import com.coverity.ws.v4.ComponentMetricsDataObj;
 import com.coverity.ws.v4.ConfigurationService;
 import com.coverity.ws.v4.ConfigurationServiceService;
 import com.coverity.ws.v4.CovRemoteServiceException_Exception;
@@ -29,7 +31,6 @@ import com.coverity.ws.v4.ProjectDataObj;
 import com.coverity.ws.v4.ProjectFilterSpecDataObj;
 import com.coverity.ws.v4.ProjectIdDataObj;
 import com.coverity.ws.v4.ProjectSpecDataObj;
-import com.coverity.ws.v4.RoleAssignmentDataObj;
 import com.coverity.ws.v4.SnapshotFilterSpecDataObj;
 import com.coverity.ws.v4.SnapshotIdDataObj;
 import com.coverity.ws.v4.StreamDataObj;
@@ -181,6 +182,20 @@ public class CimProxy {
 			String project) throws CovRemoteServiceException_Exception {
 		return getMergedDefectsForProject(project,
 				new MergedDefectFilterSpecDataObj());
+	}
+	
+	public List<ComponentMetricsDataObj> getComponentMetricsForProject(String project, List<String> components) throws CovRemoteServiceException_Exception {
+		ProjectIdDataObj projectIdDataObj  = new ProjectIdDataObj();
+		projectIdDataObj.setName(project);
+		
+		List<ComponentIdDataObj> componentObjs = new ArrayList<ComponentIdDataObj>();
+		for(String component : components) {
+			ComponentIdDataObj dataObj = new ComponentIdDataObj();
+			dataObj.setName(component);
+			componentObjs.add(dataObj);
+		}
+		
+		return this.defectService.getComponentMetricsForProject(projectIdDataObj, componentObjs);
 	}
 
 	public List<MergedDefectDataObj> getMergedDefectsForProject(String project,
